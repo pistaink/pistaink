@@ -6,7 +6,7 @@
   "homepage": "https://yourusername.github.io/pistaink/",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
   },
