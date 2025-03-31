@@ -1,0 +1,178 @@
+/* 颜色变量 */
+$primary-color: #3498db;
+$primary-color-dark: #2980b9;
+$primary-color-light: #5dade2;
+
+$secondary-color: #2ecc71;
+$secondary-color-dark: #27ae60;
+$secondary-color-light: #58d68d;
+
+$accent-color: #9b59b6;
+$accent-color-dark: #8e44ad;
+$accent-color-light: #bb8ecc;
+
+$background-color-light: #f8f9fa;
+$background-color-dark: #212529;
+
+$text-color-light: #212529;
+$text-color-dark: #f8f9fa;
+
+$text-color-secondary-light: #6c757d;
+$text-color-secondary-dark: #adb5bd;
+
+$border-color-light: #dee2e6;
+$border-color-dark: #495057;
+
+$success-color: #2ecc71;
+$warning-color: #f39c12;
+$danger-color: #e74c3c;
+$info-color: #3498db;
+
+/* 字体变量 */
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-heading: $font-family-base;
+$font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-xxl: 32px;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+$line-height-base: 1.5;
+$line-height-heading: 1.2;
+
+/* 尺寸变量 */
+$space-unit: 4px;
+$space-xs: $space-unit;
+$space-sm: $space-unit * 2;
+$space-md: $space-unit * 4;
+$space-lg: $space-unit * 6;
+$space-xl: $space-unit * 8;
+$space-xxl: $space-unit * 12;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-pill: 9999px;
+
+$shortcut-size: 80px;
+$header-height: 60px;
+$sidebar-width: 240px;
+$search-height: 50px;
+
+/* 断点变量 */
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+/* 动画变量 */
+$transition-base: all 0.2s ease-in-out;
+$transition-fast: all 0.1s ease-in-out;
+$transition-slow: all 0.3s ease-in-out;
+
+/* Z-index变量 */
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+/* 阴影变量 */
+$shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 1rem 2rem rgba(0, 0, 0, 0.175);
+
+/* 混合函数 */
+@mixin flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin flex-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@mixin responsive($breakpoint) {
+	@if $breakpoint == sm {
+		@media (min-width: $breakpoint-sm) { @content; }
+	} @else if $breakpoint == md {
+		@media (min-width: $breakpoint-md) { @content; }
+	} @else if $breakpoint == lg {
+		@media (min-width: $breakpoint-lg) { @content; }
+	} @else if $breakpoint == xl {
+		@media (min-width: $breakpoint-xl) { @content; }
+	} @else if $breakpoint == xxl {
+		@media (min-width: $breakpoint-xxl) { @content; }
+	}
+}
+
+/* 主题变量 */
+:root {
+	/* 浅色主题 */
+	--primary-color: #{$primary-color};
+	--primary-color-dark: #{$primary-color-dark};
+	--primary-color-light: #{$primary-color-light};
+	
+	--secondary-color: #{$secondary-color};
+	--secondary-color-dark: #{$secondary-color-dark};
+	--secondary-color-light: #{$secondary-color-light};
+	
+	--accent-color: #{$accent-color};
+	--accent-color-dark: #{$accent-color-dark};
+	--accent-color-light: #{$accent-color-light};
+	
+	--background-color: #{$background-color-light};
+	--text-color: #{$text-color-light};
+	--text-color-secondary: #{$text-color-secondary-light};
+	--border-color: #{$border-color-light};
+	
+	--success-color: #{$success-color};
+	--warning-color: #{$warning-color};
+	--danger-color: #{$danger-color};
+	--info-color: #{$info-color};
+	
+	--shadow-color: rgba(0, 0, 0, 0.1);
+	--card-bg: #ffffff;
+	--input-bg: #ffffff;
+	--modal-bg: #ffffff;
+	--dropdown-bg: #ffffff;
+}
+
+/* 深色主题 */
+[data-theme="dark"] {
+	/* 深色主题 */
+	--primary-color: #{$primary-color-light};
+	--primary-color-dark: #{$primary-color-light};
+	--primary-color-light: #{$primary-color-dark};
+	
+	--secondary-color: #{$secondary-color-light};
+	--secondary-color-dark: #{$secondary-color-light};
+	--secondary-color-light: #{$secondary-color-dark};
+	
+	--accent-color: #{$accent-color-light};
+	--accent-color-dark: #{$accent-color-light};
+	--accent-color-light: #{$accent-color-dark};
+	
+	--background-color: #{$background-color-dark};
+	--text-color: #{$text-color-dark};
+	--text-color-secondary: #{$text-color-secondary-dark};
+	--border-color: #{$border-color-dark};
+	
+	--shadow-color: rgba(0, 0, 0, 0.5);
+	--card-bg: #343a40;
+	--input-bg: #343a40;
+	--modal-bg: #343a40;
+	--dropdown-bg: #343a40;
+} 
