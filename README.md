@@ -27,8 +27,8 @@
 
 ## 技术栈
 - **TypeScripte** 
-- **Vite** 
-- **HTML**
+- **Vue3**
+- **Vite4** 
 
 ### 基本规则
 1. Tab缩进，Tab长度为4个空格长度
