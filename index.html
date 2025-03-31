@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pistaink - 个性化导航平台，提供便捷的网页快捷方式管理与搜索体验">
+  <meta name="keywords" content="导航,搜索,快捷方式,网址导航">
+  <meta name="author" content="Pistaink">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <title>Pistaink - 个性化导航平台</title>
+  <link rel="stylesheet" href="/src/assets/styles/main.css">
+  <script type="module" src="/src/main.ts"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 顶部工具栏 -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo" data-i18n="site_name">Pistaink</div>
+      </div>
+      <div class="header-right">
+        <div class="language-switcher" title="切换语言">
+          <span class="current-language">中</span>
+        </div>
+        <div class="theme-switcher" title="切换主题">
+          <span class="theme-icon">🔄</span>
+        </div>
+        <div class="settings-button" title="设置">
+          <span>⚙️</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 搜索区域 -->
+    <section class="search-section">
+      <div class="search-container">
+        <div id="search-engine-selector" class="search-engine-icon">
+          <img id="current-engine-icon" src="" alt="搜索引擎">
+        </div>
+        <input type="text" id="search-input" class="search-input" placeholder="搜索或输入网址" autofocus>
+        <button id="search-button" class="search-button">🔍</button>
+      </div>
+      <div id="search-engines-dropdown" class="search-engines-dropdown"></div>
+    </section>
+
+    <!-- 快捷方式区域 -->
+    <section class="shortcuts-section">
+      <div id="shortcuts-container" class="shortcuts-container"></div>
+    </section>
+
+    <!-- 设置面板 -->
+    <div id="settings-panel" class="settings-panel">
+      <div class="settings-header">
+        <button class="back-button" data-i18n="back_button">&lt; 返回</button>
+        <h2 data-i18n="settings_title">设置</h2>
+        <button class="done-button" data-i18n="done_button">完成</button>
+      </div>
+      <div class="settings-content">
+        <div class="settings-sidebar">
+          <ul>
+            <li data-section="import-export" data-i18n="import_export">导入/导出</li>
+            <li data-section="search-engines" data-i18n="search_engines">搜索引擎</li>
+            <li data-section="languages" data-i18n="language_settings">语言设置</li>
+            <li data-section="background" data-i18n="background_settings">背景设置</li>
+            <li data-section="display" data-i18n="display_settings">显示设置</li>
+            <li data-section="about" data-i18n="about">关于</li>
+          </ul>
+        </div>
+        <div class="settings-main"></div>
+      </div>
+    </div>
+
+    <!-- 快捷方式编辑弹窗 -->
+    <div id="shortcut-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="shortcut-modal-title" data-i18n="add_shortcut">添加快捷方式</h2>
+        <div id="shortcut-icon-preview" class="shortcut-icon-preview">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDB6Ii8+PHBhdGggZD0iTTIwIDQuOTRWMTBsLTIuMTEgMi4xMUw0IDI2LjIyVjIxLjA2TDE3Ljg5IDcuMTYgMjAgNC45NH0iTTIyIDIuNWwtMy41LTIuNUwxNyAxLjVsLTguNDggOC40OCA1LjUgNS40OUwyMiAyLjV6Ii8+PC9zdmc+" alt="图标预览">
+        </div>
+        <div class="form-group">
+          <label for="shortcut-name" data-i18n="site_name">网站名称 (中文)</label>
+          <input type="text" id="shortcut-name" placeholder="例如：百度">
+        </div>
+        <div class="form-group">
+          <label for="shortcut-name-en" data-i18n="site_name_en">网站名称 (英文)</label>
+          <input type="text" id="shortcut-name-en" placeholder="例如：Baidu">
+        </div>
+        <div class="form-group">
+          <label for="shortcut-url" data-i18n="url">网址</label>
+          <input type="text" id="shortcut-url" placeholder="例如：https://www.baidu.com">
+        </div>
+        <div class="modal-actions">
+          <button id="shortcut-cancel" class="cancel-button" data-i18n="cancel">取消</button>
+          <button id="shortcut-save" class="save-button" data-i18n="save">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 搜索引擎添加弹窗 -->
+    <div id="engine-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="engine-modal-title" data-i18n="add_new_engine">添加搜索引擎</h2>
+        <div id="engine-icon-preview" class="engine-icon-preview">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDB6Ii8+PHBhdGggZD0iTTE4LjAzMSAxNi42MTdsNGE0LjQgMTAgMCAweC0xLjI5IDEuMjlsLTQuMDAxLTQuMDAxQTcgNyAwIDExMTggMTFhNyA3IDAgMDEtMS4xNiAzLjlsNC4wMDEgNC4wMDJhNC40IDEwIDAgMHgtMS4yOS0xLjI5bC00LTR2LjAwMnpNNyAxMmE1IDUgMCAxMDAgMCA1IDUgMCAwMDAgMHoiLz48L3N2Zz4=" alt="图标预览">
+        </div>
+        <div class="form-group">
+          <label for="engine-name" data-i18n="engine_name">搜索引擎名称 (中文)</label>
+          <input type="text" id="engine-name" placeholder="例如：谷歌">
+        </div>
+        <div class="form-group">
+          <label for="engine-name-en" data-i18n="engine_name_en">搜索引擎名称 (英文)</label>
+          <input type="text" id="engine-name-en" placeholder="例如：Google">
+        </div>
+        <div class="form-group">
+          <label for="engine-url" data-i18n="search_url">搜索URL</label>
+          <input type="text" id="engine-url" placeholder="例如：https://www.google.com/search?q={query}">
+        </div>
+        <div class="modal-actions">
+          <button id="engine-cancel" class="cancel-button" data-i18n="cancel">取消</button>
+          <button id="engine-save" class="save-button" data-i18n="add">添加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 

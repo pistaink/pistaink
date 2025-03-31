@@ -26,9 +26,9 @@
 12. 帮我添加 github 工作留，每次提交后，自动部署 github page 静态网页。
 
 ## 技术栈
-    - **TypeScripte** 
-    - **Vite** 
-    - **HTML**
+- **TypeScripte** 
+- **Vite** 
+- **HTML**
 
 ### 基本规则
 1. Tab缩进，Tab长度为4个空格长度
