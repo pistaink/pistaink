@@ -13,7 +13,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  base: '/',
+  base: './',
+  publicDir: 'public',
   css: {
     preprocessorOptions: {
       scss: {
@@ -23,11 +24,28 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    open: true
+    open: true,
+    watch: {
+      usePolling: true
+    },
+    fs: {
+      strict: false,
+      allow: ['..']
+    }
   },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    minify: 'esbuild'
+    minify: 'esbuild',
+    copyPublicDir: true,
+    assetsInlineLimit: 4096,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'pinia']
+        },
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
   }
 })

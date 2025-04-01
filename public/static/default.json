@@ -1,174 +1,424 @@
 {
-	"engines": [
-		{
-			"id": "google",
-			"name": {
-				"zh": "谷歌",
-				"en": "Google"
-			},
-			"url": "https://www.google.com/search?q={query}"
-		},
-		{
-			"id": "bing",
-			"name": {
-				"zh": "必应",
-				"en": "Bing"
-			},
-			"url": "https://www.bing.com/search?q={query}"
-		},
-		{
-			"id": "baidu",
-			"name": {
-				"zh": "百度",
-				"en": "Baidu"
-			},
-			"url": "https://www.baidu.com/s?wd={query}"
-		}
-	],
-	"shortcuts": [
-		{
-			"id": "github",
-			"name": {
-				"zh": "GitHub",
-				"en": "GitHub"
-			},
-			"url": "https://github.com/"
-		},
-		{
-			"id": "vue",
-			"name": {
-				"zh": "Vue.js",
-				"en": "Vue.js"
-			},
-			"url": "https://vuejs.org/"
-		},
-		{
-			"id": "typescript",
-			"name": {
-				"zh": "TypeScript",
-				"en": "TypeScript"
-			},
-			"url": "https://www.typescriptlang.org/"
-		},
-		{
-			"id": "vite",
-			"name": {
-				"zh": "Vite",
-				"en": "Vite"
-			},
-			"url": "https://vitejs.dev/"
-		},
-		{
-			"id": "youtube",
-			"name": {
-				"zh": "YouTube",
-				"en": "YouTube"
-			},
-			"url": "https://www.youtube.com/"
-		},
-		{
-			"id": "netflix",
-			"name": {
-				"zh": "奈飞",
-				"en": "Netflix"
-			},
-			"url": "https://www.netflix.com/"
-		}
-	],
-	"defaultEngine": "google",
-	"defaultLanguage": "zh",
-	"languages": {
-		"zh": {
-			"app_title": "PistaInk 导航",
-			"settings": "设置",
-			"search_placeholder": "输入搜索内容...",
-			"search_button": "搜索",
-			"add_engine": "添加搜索引擎",
-			"add_shortcut": "添加快捷方式",
-			"edit": "编辑",
-			"delete": "删除",
-			"save": "保存",
-			"cancel": "取消",
-			"name": "名称",
-			"url": "网址",
-			"icon": "图标",
-			"language": "语言",
-			"theme": "主题",
-			"background": "背景",
-			"light": "浅色",
-			"dark": "深色",
-			"auto": "自动",
-			"import": "导入",
-			"export": "导出",
-			"reset": "重置",
-			"import_success": "导入成功",
-			"import_error": "导入失败",
-			"export_success": "导出成功",
-			"export_error": "导出失败",
-			"confirm_delete": "确定要删除吗？",
-			"yes": "是",
-			"no": "否",
-			"search_engines": "搜索引擎",
-			"shortcuts": "快捷方式",
-			"appearance": "外观",
-			"data": "数据",
-			"about": "关于",
-			"version": "版本",
-			"default": "默认",
-			"set_default": "设为默认",
-			"add": "添加",
-			"bing_wallpaper": "必应壁纸",
-			"custom_color": "自定义颜色",
-			"custom_image": "自定义图片",
-			"opacity": "不透明度",
-			"loading": "加载中...",
-			"error_loading": "加载失败"
-		},
-		"en": {
-			"app_title": "PistaInk Navigation",
-			"settings": "Settings",
-			"search_placeholder": "Enter search terms...",
-			"search_button": "Search",
-			"add_engine": "Add Search Engine",
-			"add_shortcut": "Add Shortcut",
-			"edit": "Edit",
-			"delete": "Delete",
-			"save": "Save",
-			"cancel": "Cancel",
-			"name": "Name",
-			"url": "URL",
-			"icon": "Icon",
-			"language": "Language",
-			"theme": "Theme",
-			"background": "Background",
-			"light": "Light",
-			"dark": "Dark",
-			"auto": "Auto",
-			"import": "Import",
-			"export": "Export",
-			"reset": "Reset",
-			"import_success": "Import Successful",
-			"import_error": "Import Failed",
-			"export_success": "Export Successful",
-			"export_error": "Export Failed",
-			"confirm_delete": "Are you sure you want to delete?",
-			"yes": "Yes",
-			"no": "No",
-			"search_engines": "Search Engines",
-			"shortcuts": "Shortcuts",
-			"appearance": "Appearance",
-			"data": "Data",
-			"about": "About",
-			"version": "Version",
-			"default": "Default",
-			"set_default": "Set as Default",
-			"add": "Add",
-			"bing_wallpaper": "Bing Wallpaper",
-			"custom_color": "Custom Color",
-			"custom_image": "Custom Image",
-			"opacity": "Opacity",
-			"loading": "Loading...",
-			"error_loading": "Failed to load"
-		}
-	}
-} 
+    "defaultEngine": "bing",
+    "defaultLanguage": "zh",
+    "engines": [
+        {
+            "id": "google",
+            "name": {
+                "zh": "谷歌",
+                "en": "Google"
+            },
+            "url": "https://www.google.com/search?q=",
+            "iconUrl": "https://www.google.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABWhJREFUWEe9V2lsVFUU/u55dGY67XRo2cpmsaLQCilSFVkkDY0WFTdwAYwRpCIKERAkNaYgEpCGkNCIibKESFg0JphoJAixJDaQYlFoUAxiC5WwlLIVOtPpdN65cod5M+9Np50paby/2jnb98757j3nCCR4pJRpAKYw8yQpZZ4QIhuAK2R+U0p5RghRQ0Q/A/hRCHEzEdcinpKUchgzlwCYTkSOePpKzswtAHbf1l8rhDjdmU2HAKSUTmZeBWAhEWmJBI7WYeYAgA1EtFwIoUC1OzEBSCkfYObviCj3bgLHAHKCiKYKIf6JlrUDIKUczcw/EVHvaGX94nm0HtyPtmNHEaivAzfdAKQEpbmhZWXDljca9sLJ0AYOboebmRuJ6EkhxHGz0AIg9OWHooPrly7As+kztFZWBAN2eoSAfXwBUuYthJY5wKIaAjHOnIkwACllCjP/Gp1234G9aC4vg/TFLGGHWESyE64lH8Fe8EQ0CFWOMQYnwgB0XV9PRO+btb1ffwXPls/vmgaOoilwfbA8VjnWaZq2TAmCAEJX7U8z29WX3yr7OGbwHtlDYXt0HLT+AwEhoF84D3/1YQRqIzfO8cyLcC0qCcpj3Q4iylGlCEp1Xd9GRLMMRUW268UzIFt9FlsVMHVRCWz5Y2IC8x+twq31q2GfUIDU+Us6zRwzb9U0rVhIKd3MfMn8yHjK34P3hyqLg6ScEXCvKYdwGY9fbP/S64FwpsQtGzN7iShTAZgJYKdhIVvqoFfmwlvRH61H+wR/poxeSN+8C+ROj+u4iwrTha7rW4hojmHIZz8F164I/uv/qye8e7OQunAFFKG6+zDzJhEIBKo1TXs4XP/fiyCvHwzH4puDYHv2b6BHj+6Or7h3RGXgKhFlGN4DlYMBf0M4mOj3ErQRuzoMXrjGkzCw0hfsKMiNfIh6mBQAPxElhQFUOADJYac0pAR03yfdAmBOgQ0zx4VDqa7p/18BvD4hCbMm2iLlDQG4QkS9OixB32nQRu7ulgzMK7Th5TGWDDS2J+GxyZDXKsIBG2w56Dv+NyRR10h4ppFRvNnaP1ZMtWPi8Igfg4RR17AMXFsaBLCvdRDKbuVh6SML8Hx2YcJkU4rfVLVhU4XfYrNzvhOZ7sjTHLyGUsoZAMI0ly1n4Tuciw3NudjjGxJ0kOFwY1fRevRy9EwIRLNPYvaXLbjmibTue3oTts1NjrZ/VQFICz3FYemGqlXYWV9jUR6eno2NBaVw2zp/itt0oPRbH6rrdIv924U2vGKtv3qK+xnNaCsRvWlYXPQ0Yvq+xfAGrM0o09kby/LfwuMD8mNm4vSNepT9UoUzfzwFIDJGZqQIbH8nGck2S/o3a5o212jH9zPzSaII0/bVV6K0qjxmoCFpAzE28yEMTs2EEAKXW67i2OWTqLlyChISmm8onA0LIAJ3esfKaQ5MGBYBxMxtoXZcax5I1hHRUnPEHae+R/nx7QnVPVpJ6C4kN7yL2fl5lruv9Jh5raZpH6q/zSOZGsOPENEIs7P9/x7C6uov4A10bSTThIbinNdQPPI5CzZmVsvLY0KIYH2jh9KhzHyYiO704dC55L2CjTU7cODcIXC8oRRAft8HsWjUG1DENR9mbiAiNZTWGb/HGstHMfP+aBDKQJFTgahuOIHapnO43toUHJLddheyXAMwqs9wFA4ai2Hp97YrWyh4kVrfzMKOFhOViT1ENPKuCBBlFEq7WkzCX95hBgyBlDKZmVcCWGy+HV0BpNh+e4FV0/ZKo+btyBrPoZRSZUMtpzOIyBlPP8RyrxrziKhMCFHbmU3c7diUEfUEPh21nrtD8iYpZZ1pPd8rhGhOBOx/iMlsM+yNfVQAAAAASUVORK5CYII="
+        },
+        {
+            "id": "bing",
+            "name": {
+                "zh": "必应",
+                "en": "Microsoft Bing"
+            },
+            "url": "https://www.bing.com/search?q=",
+            "iconUrl": "https://www.bing.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABKJJREFUWEfFln1olVUcx7/n3OvuXu512zWFUsFhCmuLNlqaVOitnmx/hOtFochYBGUJKu2fkv6YUL6EoYR/CFIOrBArnfTXajVXuE1nOomBQZAGRc6X3bl7n9dzzi/Ofba5t+fuXtjogcPD5Z7f+X6e7+/8fucw/M8PC9Jf0zUU5074ZzAsJUUfdT0Z/XguWAMBHmtPGYyx70dFCegHR+PZRMmF2QQJBmizDTA1BjAqqkB7up8p2TlbENkBFE0B0MIK2NNdXzQrEMEAp22D+PQABNzpfq6odDZcyA4ATOuAFu7aUBgYmw9Y4CKrT9oGp7ubcPKi3S9G5hjghG1wZAHYNNcAX9kGH1eGUxx4ea4BjtkGy+JAz2Yf4JEOqmEKB4mjpTfBWvLJv54bvAeOegZj01eBDuxpLMjErv6RkgSUEiMQo2sCtKMvEW7NFSQY4IhngAdXwbk35vkA7dSqOG0gQANAcAnJVaeA13zlidiZmUCCAQ57BrKU4bktPsCqDmogolOKERRTEFwPCS8k4YVF51AYDcna8mQQSDDAIc+ggE6oFzu/zU+Bfuo6ZFKBSuWIuAhJOCEBNyzghMVQYVis+7tqSd90EIEAdfttg7HgFPQ23W1ED3fIg5Kr7SP2w9XioYw4eEggyuTlqBDr+morpjgRDLDPNpDFgQvvF43F1nTQMhVy/xy1f+TL4YQ8xJhElEvEmNjVU7W8ebILwQC7UgZl6YS/NpdMiK3+xT4juFyb+XrfeszjAlGuRgDktc7K5ctyB9iZMlSWTXhxd3QCQE3HYFk6Em52w2K7FhchgRj3vz4zmEQJp9rWlSsn7IVAB2qakgYDDzyMLn0yf9rYZZcGy9LwGiKWu6lgwKmPr+QZgGKmUMxl4psVlRNKMxhge9IgCm5Elz8tD4x9oOnqTjcl3rPueDFVLG9Xbo3EY1GFIqYSx3MFqH7rVtYq+O3wgikAaw7+s95L4YCXUpVuSsIeFnBSHiJLxI26raGFESYSX6x4MDcHqhuvG5TlMOo/umgMYP2JgfudYRySaVrvpQEvpeCmFZyUhJMScC3XTuxXhQVhp7ylonZCKQba+NCO6y/YN9S3QR3s9y/vzcTWf5fcp0zxtjARE2lCBiDzJrhp6Q/Tw9q91uljK6oacq6Cp7+2Xv/31K3PbVd3+alP1baFz0pHfEa2XCwtAWESpKnFWUZc/3ZNBS+tIFxhP96crG+ZZH/W01D/mfhw4OZfvekFahxDiAOLKgoGFz0fL1euhLQklCUhLIJIA8JkEKZ+A56pICyFovucn3p3LX0qr1asJ790hfYlf7j5zsD5lOmZcn5sSSR5z6Ox0sKK4iItnhm2gu8AMg5ogMzb0gA07KTxZv+R+PG8DyMdsLGf4pzjKhHF9F2cpIISBPLIF58EoCwNwH0HLNbjmdh88UDpH9mO5Bkvlhv7aRVj1A6F2FQABWX7aZCW3gPafjYsTOw9+0HZ7pnuAjPugdEFGvpp1TzQSQi1eKID4wF0CqjNNEOvdL9bejsX8ZwBRtNBQm1RQr0Kjyr9FPgAwhRtwqYD7a8taMtVeHTejCnId8F85/8HhhyeP5+scc0AAAAASUVORK5CYII="
+        },
+        {
+            "id": "yandex",
+            "name": {
+                "zh": "燕子",
+                "en": "Yandex"
+            },
+            "url": "https://yandex.com/search/?text=",
+            "iconUrl": "https://yandex.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAABSFJREFUaEPVWU2ITlEYfu/1lRoWWCnslLKRZoWFJBRKRJSFFGX8heQnhhgKCRl/RWEhZDJZmAhpNiw0aWZBIUWUFRbfNyV3ztU53z33O+c97znn/ViYuZvh/pzznud53vd9zvkSMWdKDiP4Sn4vnZaP+jEIQ+NbYCT+TTQDegGajJHy/5IBGfhICFrGKZWiL8WAGfhwlZKZpma8w5oBrAoMrnzuZeB/5wKlChyTfGfYJjGFPta/w8BwSWIu+jKZSwZ8SWIiIQf2XWZl4ALhG8/sR3h+c54gA1TCDM1bBJW95wDGjgGo1sq/4sFNSC6fsMqwDk5PiMfLZ7RC0n4BkomT7LGun4Dk7k2FEwaCWozDQOgjNWrnXUhmzmoQITIQH9+B2LnC6uRUwln1+/gVgLmLLULzb19haON8dc+3cByfYyX0KnHC6A+TJSsBtnXU0RdZGYC4eCSInIPe1Wd19I1L3LoE4s55EggscR2fxUAMff08v/EI0qnT62NKKbWMJlkgZTi+BdI12yFdu9lOp2oNxIYFkHz5Ut73NVXzw2gnxlqUg6YLV0EqWdCXZGLwF2Qnd8Co549J/VrgdL2EZOy4Oov66u2B7PQuFvpmkjsLoBKFXMTZ+3UWDBnl/a8Atq22FoBLYmX2YoC9pwDSSiP4as1aPBUDpQ75ntPIfCXQqSJt++oy0AsY/KUQFVuWg/j81jJcOlI1xtHrdhEAgPz1S7VwX5DW98j6e5M4VtfloJXbfQ0ZFDKCvl5HCmXuzGiFtPOegz50tkP+sIulfacK4R2ZrwtS6CSyFLbOtfqCLIX5jlUgat8tFuT3ld1nGu8X4YoPb8gSHGqG5jPvjgzTRukynzwZ0mtP7MYGAGY51N+lYyY03kWlUzZBKs84HbkpK0EtSrFgNqRqDfLqT6ch5TpnjOBDjctXTHAMigF5E68WI+JDSFqC9GK3EVb9n5IFjaxkCo5da/QO+YLsH329kB/Y5FgQ7HdCiyGthF4QdxGOvUAsqMa1bJ1V91WudGyFpL+PlbwmQqbPIvsAO/BiVGXyOq66LHS2K3thdW79Vm+PQp+aCwdLnZbod4J9INTKsdt07IXsCR/eABzcAGnbQWdx2dNu1bVx1dMvUpImc1CfC1EPY97IRE+ZvP1nGoEWHglO7oHsRQ955vQv6Jfm0jyV4PYAX412pCIyiNkLKkFDHTnYyHwLoNih0LNKpeGRssNtpcnjMG3K0yfjkgGOhEILw89SbfJULc3qtsHjNJsFjErusgr5SidGIISgfNfy+sUCdMPCu6xYtePIK7il5DpTjIxl8oqHoiipzUrIKV/GXlnGR54LcZOZQkjes+yF3vwXdZ8rRw76ai4zB7iDh8pr6TqxP3o/AEOH1jv7hFiSxlQQPFqMMeHLj5IBjT6xafGVytj9YBnl6jNmtpTvRwyIb59K34/niaEcem4x4JNGsxXqbxig2PQFbiY261QihhhOOIuBQkbmzis2HicXy0bm+4nJV2Fik/uqEN64h9ClFuDNN6oKxaQU0yy1S+PkQKwzU+BF9wOxkkkltJMDcoPzfsA6OvFVGzNInXs+9BXbWELcgH00U53TvEcd14QCjLKNfyfmah/7GG79DgUbmtubA+a5EDd5/rbBUW6Sgz67D1DukJo05CI5EuQCgOVIjR00c7HmEkpETpJS9jqUxJTEmvqdOKR7Lqrc93xzYWCiPzH5NNoMO7GgQ5UrJsng6XTo41hucILGIDQDlp7/D25IWUHl7gbmAAAAAElFTkSuQmCC"
+        },
+        {
+            "id": "yahoo",
+            "name": {
+                "zh": "雅虎",
+                "en": "Yahoo!"
+            },
+            "url": "https://search.yahoo.com/search?p=",
+            "iconUrl": "https://www.yahoo.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAyNJREFUWEftVWtIU2EYfuYtzQualjY3UpluiuEPi1DxR9kNFCoSJNPoR5qkpllaKmSkaGoqVGYUkZFaXkowlEBMLLqogSBS05x5SZ2K05M4U7edOBPO4eh0K11B7IPz43y87/M85znf+3yc05xOEv9wcQwCDA78tw7wdpojpoLPmq+2KgJ1meOsPb1NQfQTHvxO2rHIsvwlkHyU61+ALdcE+d9EMDHl0GQDHXO45tu7InH04kBojhOCL29lkd2PHMKH8mn9CzDbzEHhkCcs7YxpsqmRRSS7iKFUrIxcjQ6kv3ODwM+Srn7zUIZHUcOs7iMZ23A0w5Hek7TKkeUnQVCsPSJuc1m11alSNOROaAx8jQJ2HbdBbPUOumFersIF5y+YI1TqPSNj4OaACHZcU7qm5MQg2qsI5HR7wFGwiemdVSGJL4Z8Wqm7AI4RkNcrhIOLGd1UkTiCxluT6vflAqeGF3HJRQyfEBucr2WEU7VNxZMoix9Z9bpb9RAeSLBHeBFj5aj4J9K8vqqBUppc4bnXigatSZOi/sYErrS4QRjI/DqVikSqsAfjkoXfF2BuZYTC7yJY2DCHKXdfHwipAtmfPWjAhbklixfkKmR2urOIxM2zKD3LPjvLlaw5hmH5Tjh8kRmn9hoCxOgi9sc70DgtD2Q0CSVasUCqH13XmgK28E2RJxHC2GQpUJQKEtQXW1gzrqR79+DHmALRZXx4H7SCSgk0l0yiPGFUJw1agyjmKR97wmw1gnU1zqDgUD/OlPIQcIodu/fCB9H6jNAqQqsA190WuNoq0AhUFNKPzoYZZHW5w9nLnFVTlzmG2gz2xaMJRKsAqintrRvcA5jTTe1Je+aRKupRY0bc4SLonD2NT5IksgP70PueffH8sQDfYzaIe86e7ydxw3h9V6bGpOI3LH87fIKtMStToj53Am2V2u2nenVygAJOfOlCf4CcUCKJJ8b87FIyrmfpJGB58LwqmEBlsnQ9vHSvVgF8H3Nc72ACRqUkkSLoxuTA4t8REPWYB/9IZsQ+vSBQHDq4IeQ6n4ENY9MApPUX6JPc4IDBAcqBX5JjRnCuKUcIAAAAAElFTkSuQmCC"
+        },
+        {
+            "id": "baidu",
+            "name": {
+                "zh": "百度",
+                "en": "Baidu"
+            },
+            "url": "https://www.baidu.com/s?wd=",
+            "iconUrl": "https://www.baidu.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAC3NJREFUeF7lW3l8jGce/05mcs3kkPtyFlXWsWurZX1Ko4Jg44i6rw+lbqmNugVBnHUThDqqbuIMamOjx1q0Pi3COqrIHZKYHJPMJJnd3yuTmcw777zPxMvW+v03n/k9z/N7vu/z/O5HBjPS6/VNAIwC0AlAbQAu5jyv2e8CAI8AnAOwVSaTJZvKLzP80Ov1DgBWARgDwO412ySruOUAYgF8JpPJtDSIA6Bi8wkAOrDO9JrzJQIIJRAMAGwAMO4135St4m+UyWTjZRV3/vr/8bEXAoauQzMCgO59hK3wCfEXF+uxe28+Tp0twqPHpVApZXj/XSeMGuGGRg3tRZe5flOLuB1qXL1WAo1Gj3p1FAjrpsLAvq6wFx8uOr8Zw2oC4CYA0vwvTGkZZRg9IQu/PtDx5lIoZIiZ74VuXZSC6xw4UoAFMbkoL9fzeN552wFb1vvC20tS/ZxMAORLYep0OqBHv3T89pC/ecNuCIQTBwNQp7aCt8Fbt3XoMziDFLIgQE3eccCB3f6wkw6DAgJAeEUbzsTOPflY+kWu6IjuoSosW+jF4xsbkY2kbzWi46PneiG8h0qUj5VBEgAKC/UICUtDXl6Z6Lp2djIkHA1ArZrGU3D7jg69B6SLjiUGfz8FzsQHwoG8FglIEgBOny1C5MwnzOKsWOyNrp2NuoDu/rxFOczjY9f6ol1bJ2Z+a4ySALBwWS6+3k+qhI3GjnLHxDHulcwxK3I5y8FKY0a6Y9I443jWcZb4JAFgwpQnSEwqYpaja2cVViw26oExk7Jx8Xvx+29YoEc3FWIW8PUIswAmjJIA8OnEbHz7A/sGeoW5YFGUZ6UYk6Y+wflEGwDspMKKmN8RAJEzn+L02ULmDzBiqBsiJ9eo5I9alIOD/9UDrNQv3BVRMz1Y2a3ySXICtu3Kx8o14ibQIMmMv3lgyEDXSsE2blFj/eY85g3Nm+WJvr2lidIlAeDuPR3nBLHS2WOBVczgrX/rED6QbTyZ0XPHAxEYIGdd7uWfAFrhk/HZ+OGSuB5o2sQRB3b78YTq2isdvz0S9iINAzp3VGLVUm9JNk+TMJ2AX25oEbdTjStXi1FYpEdQgAI9w1Sgu2xf4c+kpJai98AMFBRQkCVMa5b7IKSDM4/hyPFCzJ7/1OpYDw85ju0LgLf3c1+4pESPLV+qceJ0IdIzyuDmZoc2rZwwcrgbGjdii5xEASAXd/nqPIsBSvOmjojb4AsXl+eJJYrkxkVk42mOZY9w9Ah3RIwXtt/W/AnyADev9UHDBs83lpdXjuFjsnDnLpfYqUL29jLM/twDHzPoCasAnPu7BhGfZ1v9Kt26qLB8kdEkFRTosfNrNS5c1CAtvQwKOfCHxg4Y3N8VbduIe2+JSRrsPViAW7e1oCClVpACH33ojEH9XaF0rszgYezkbCR9J3zlSFcQYGJrCgJAIVK3cOvRnQGZvTv80aKZRM45w+3+/p/FGDUhS5STgD/4lX/1lOD5CxpMirT+9Q0zt23jjK3rfUQFkophwPBM/Hy9hGm67bF+aN3KUZBX8ATY4tw4Ospw+WKtSoXIJFk1meiKtQ5OsaiTLE0p5jQJAtB/WCZ+ucGGMi381TY/tPyjMNLV3C9v2MXvijFmsvjxNwz8y/tOiNvoa/sJaNsxFbm54vG9YeaVS7wRGiKc7jLw3bylxTeJGqSklCL7aRl8feSoXVOBziFKvF2h4a2BRS4zuc6sVLuWPc7EB9gOQMu2KSgutm7TTWcVsu+mG1+yMg8/XisWFKb1e06YGemBBvWFbTiLv2C6gI+3HElng2wHILRnOh4+FvfMDDNvOWWj4HZ8B4f+J6EXxORAqxXPvimd7RAd5Sl4mo6fLsL0OezJFzFLIKgDZs/PwZHj7BHahYQg+Pny/fPD8YWYE23dw7P0ecjdJbfXnO4/KMVf+6Sx3gAMHeSG6VOMkaf5QEEA6K72G5rJpG2bNHbAIQv29kayFoNHZjJ9eXPBVEo77N3phwZv8a9Dl57peMRwOskjjN8XgHp1+Vlow3pWPUHWOH3aFA8MG2QMb2lyMle9BqQjNa2U+WuZM9avZ49De/xBZtaU1m9+ho1bnonOa553sDTAKgDkb/cfnmkV7T+1cMSurX6Qm53+qbOe4tQZ9iSJ0G4s2XEKgsgZun2HHwcY5mlY3wF7d/hBqawKHvMVMDDm5JYjekkOKC4wLSHIZDJ0D1UiaoYnb5FjJwsxI8r2ey8EwrqVPlw8YErP1OWIWkhyVU2lUQzQvYsSs6Z5wrUiSLN2VESjQcNgCnev/lSCgkI93FxlePfPTgj05yu9f10p4RwV+kpSEemDbZt80bwpP954nFKKH69VyOVmh1YtHRFgQS4hWZgBYNnMz9e1GDk2C0Waqv4DxearlxljhSPHCrB5u5plykoedzc77Njix1RgtWViyQC4fLUEEyOzkZ/Pd56aN3PAvh3GqGznHjWWfsGeAzRsiBIim1b7WDwJtmzalFcSAE4mFHHZHK3O8rGXCgAS3MnJjss/mOuE/xkAm7aqsS7W+teUEgDaKCm6qRE1eKa3OiBU+wRoivUgbzHhnLipkxoAw0bDe7hg7gzPF2qcqBYAZBHGf/YEd+8L22HyCwx1/BZNHbErzpgJNtUBNWrYwd3VWPBPSStFmVkQGhQoh0L+3J6XaPXIyDQykK9PcQhFldUhmwFIvqXF6InZyLEQKndo74x+fVxAyVLS2kJkCgBViMhjM1BwaCoys6oi8M3JQC4TTXQjuQR9h2RWmdrPV8HF/PXrCbu8kpjBe7/qMHRUFq8PgDY7e5oHKEHKQlIDQGv6+MixZ5sfagbZBgLzCaA7Hz4gw2LxgpyUNu+JZ3wN4LwMAGhu6iPav9vfptQcMwCLluVij4UeAGpXobYVUyLdcDNZy91XIi9POToGG0PblwUArWVr7wATABQPdOiaajGsNb2fJMCaDXk8L49S5pQ6f9kngOZXqeyQdCZINAgyyMIEwNYv1Vi1nm/rKRY4f8qYbkq+rUWfQRk8NfAqAaDF5073RP+P2arHTACQybtwkd/AYG7fqc2F2l3M6VUDENZVhSXRbA0UTACEdE9Dajo/sUFZ3Pj9xoxr/IkCzJzHz9i+agAaNXTA0X3WK0I2XYEPQlItFjxVKhkuXagJeYWTQm1yob3T8exZ1YDIFgA6haWBHC1TEvMDzE9c3dr2OH1UOBVuys90Arr3SbfY/koTbd/kC0pnG4hyifMX54D0QXkFDtYAoGoxVY0NRNnjfYeqJmNtBaBFM0cuG8RCTAAMG5WFKz9ZzudTAzQVIKkN1pQoMtRVmEFyiZ2djZ6hqRm0ZEYLC8srwaM5qfxOGSgiS56g+UaD2ymxYRVbEwUTALFxaqzdJBzxUc8e2V9WMgWALMnJwwFcmMtCLADMiPTAkAFVk7RCczMBcOeeDj1FeoCo62P2NE9QJUaMzBMivcNUmDPdk5f9tTQPCwDnTwYx9xAxAUCCDPkky2pZi3goCRncXokWTR3g6SkX7OdN/IcGh49VDaPJh+8SokTdOgp41BA+DfQGwVo2qf0HzlzWiJWYAbh3X8f1AJWWSpfsZBWSlY/qB9SOb0tAxAwACUFfbW50jtWeflZhpeYjJUxt+HSKbCECwKYHEycSirhCJ2nq3wtROL5wrhc+CrZcnLUiJ/dgwuYnM5SRWRf7jKv8sFR8AwMUXCaXXny8Vc8edWrbc7UF0vwaTTnU6nI8fFSKew90oIQLteVlZomX1Mi0kts7/lP36j6l4Z7MVPvRlDq/HJcul3BOT25eGaixisrblOYK8JNzd5Fq/dayQ0Jfh8pylIB5nFqKzMwybn7KSZA74OUh5zrPyAEjb/QFiHs0RQ+m3txnc4SeXq9/cx9OVgBARbc39+msCQhv5uNpUyXypj2f/w/3+YC2GpWuFQAAAABJRU5ErkJggg=="
+        },
+        {
+            "id": "duckduckgo",
+            "name": {
+                "zh": "鸭鸭Go",
+                "en": "DuckDuckGo"
+            },
+            "url": "https://duckduckgo.com/?q=",
+            "iconUrl": "https://duckduckgo.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABt1JREFUWEeVV31MVWUY/73nXu69fMiXgV0/gIvmlmyJXtyabQqr5dQ0HDZBCHER6uZEw5bVUJlb2pZlLsswp7IF6GBi2XRtTuiPail5t/woUu5lRghXArkIl8s959TznnsO536g9v4D97zPeZ7f83s+D8MTHmd+bqJoGco3gC2VZWRDQAZkJPLXGQYhwSUzOGTIbQZvfIutpXXwSVSzxwk5C5/PgOyvlAW5TDP4uJcAyMBJAVE1tsafXY8SnxQAeYzooT2yzLarCizP2hGzKBfR8+wwplghxEzhV9KIBz5XB8a6OjBypRXeW+2aTZmxQ8Kov8bW4ojISEQA5LWM8csAMkhT3JJVSFr7Jowp05/Ad8Dv/hsDTccw/MO3qryLISovEhthAJzrF2XLknSWjJPBaVUfwZQ+V/P0wYUGeG+2w+/u4YboCLFTuExMTi5ic5ZqQOm+Z99mVc7FBGGNrf6KQ+9FEAC951OWrELyhrc4zaToYbcLZpOZ0/3wShtG2lshPfREZCRu6SokFSiMkbz7ixqMXG0l2TAmggB0Ftqd5Dl5Qp7TIY+HLp9DYskOMGs6TAnJMJlMHFR/3ceq4jAgBDxxbQUSlhfxu/tHa+Bp4yFxMa+4QM0JDYCzaOEnlHCEesaBr7nnA821GGyqnVBuiYVp/XY8tWQFzGYzfz7cdp7LqeEIRUIgkgoqOBPdu4q5HCXm7IarO5QKBhCgnrzHrMPfcOrI83/qDmr6THn5mPraFliSpkakXedh2H1yaRVnwtfVge5d6/k9Q5SNkpIDuFNoP8GAMsr2lC17OMrud4u1GJuWF8NaUglBECatAr2HoULEJrFKjlE+UHXIMj6dfbp9O3OWZSfKXsOA3nv30RoMK/ECklI5Kzc6+tB734PFORmIi1HoV8/trn70uj2wuq+D1e2NCNIyzw5r9ZfcubvbVvPuyUZFG7tduLBMADtBTca6WycQUGNYVoS0siqQkTnpkelXLRILpHyy6kg/fpnnVs++TbyUJQgbmUq/GqfQ2FvKq2F98VUl4UbGMPzQh6dTlA6oP5/X/Yj586yY03Zk0spILKhA0toKLb8YcJJ1FtmvQUY20UM0qehU5ZatB2B94SX+c9N7TYiLNqOm6uWwMJRU1mOxPQPr8BOGLjQ8MgxaMjLmIAADNGRUerrK84IoNKzbhrT8Uq6wrvkq/1takDNpMg401WKwuRaCBYjLAqJnAe6LgOQFT0LKJwpV1xt5Sh50Ftpl0mZrUJQ7i4KVyyvKkPn61nCDogfoPw+MdATd+e/9AYx2wBivPPbeBXpOT4iE2nk8gIW5mFn5Ae9+Qee31YBPmQWhRxoDfH2A5zowfCP4NhxASAgoi4O6mtWG5D1fISEhYULTaAdwU2koo3eBvnMBiuMByaf8H+lQBVCog0MQSMIZ++thypgbloSkKPbDJqSm8cmsHKKfGBA98LmB3hbA/yCyUf1TtdSpBCnZwZOw0H7yv9BvUMtQTSL9i6yiBhl5K4MtUOw7dwJjShgIiN5zY4ISBgKnntBS52WoNaJAp9Lo0ZmTF69E2pZqGI3GMDf9v9di9JdamFPAM5+D6QXG3MDQr8Gg1DmjljqDvFFpxWMGJ5ViqIBmzZaF5HcOB+dB4DISY5GCoZ8zvBXTQPKKScowKrIfYjIqaZFI2Rw+jEgm5sAZTEvPDNNN49h9dKL//2k1INonY2a/pMnSxjRjf2AYBeYM0W9rbN8YGMfZGTIMfByryUjdrF83jtU8GB73wOm5jcz4ZxBrjOMV43g/nxu9mG1Ea5YRz3WJKL/k0wBMLa1C/PKiiUHEx7FoszU6lHGsZ0G/kNAyQssGHcoDa/kufNd9FqecX/BnWQnz0ee9B/dYLyRRAhMYGGNIHpax94xSi7SM0FIStJAERjEPgwogMJav0UqmhoLuiAkCIaWmIfHtQ7jUf0EDIPpFrsFgMECSJA7CGKUk6menjdw4eU6n9+BObS/MbGy3qXZDllIeCr6O015Iy4m6lNKaPb6sGL1xA6h27OCejvvGYZbNHID1ryEkDYm4M90Ak3UWjmcd0ZZS2h0D+4WLQcwj6iMCoIeha7m1+ujEmu33wyuPouT7VxAbFY+d2buxIHUR16XujvErirQPFpp65Hmgs7qYIK6x1TsmX8u1cBROMEHP9Gs2/aZEjIsK3wnU9/mHSfOxia2Kr+PBnk/KgL7O1PJUn9G+QKExp8/lbVv/aebv68HorXYeZ2q16qHdTxgT9/6vTzM9CKfCBhX6Bv3zR/7PMChLOCUw8ZA+3pHeeezXsRaW/OxE0SLkC2C5YGw+IAd/noO5mMwcIsQ2g1dqmczjUBD/AiD7esaMEsagAAAAAElFTkSuQmCC"
+        },
+        {
+            "id": "ask",
+            "name": {
+                "zh": "Ask",
+                "en": "Ask"
+            },
+            "url": "https://www.ask.com/"
+        },
+        {
+            "id": "ecosia",
+            "name": {
+                "zh": "艾克西亚",
+                "en": "Ecosia"
+            },
+            "url": "https://www.ecosia.org/search?q=",
+            "iconUrl": "https://www.ecosia.org/favicon.ico",
+            "iconImageData": "data:image/png;base64,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"
+        },
+        {
+            "id": "AOLSearch",
+            "name": {
+                "zh": "AOL Search",
+                "en": "AOL Search"
+            },
+            "url": "https://www.aol.com/"
+        },
+        {
+            "id": "startpage",
+            "name": {
+                "zh": "起始页",
+                "en": "Startpage"
+            },
+            "url": "https://www.startpage.com/do/search?q=",
+            "iconUrl": "https://www.startpage.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,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"
+        },
+        {
+            "id": "Dogpile",
+            "name": {
+                "zh": "Dogpile",
+                "en": "Dogpile"
+            },
+            "url": "https://www.dogpile.com/"
+        },
+        {
+            "id": "Lycos",
+            "name": {
+                "zh": "Lycos",
+                "en": "Lycos"
+            },
+            "url": "https://www.lycos.com/"
+        },
+        {
+            "id": "AlltheInternet",
+            "name": {
+                "zh": "AlltheInternet",
+                "en": "AlltheInternet"
+            },
+            "url": "https://www.alltheinternet.com/"
+        },
+        {
+            "id": "Qwant",
+            "name": {
+                "zh": "Qwant",
+                "en": "Qwant"
+            },
+            "url": "https://www.qwant.com/"
+        },
+        {
+            "id": "PetalSearch",
+            "name": {
+                "zh": "Petal Search",
+                "en": "Petal Search"
+            },
+            "url": "https://www.petalsearch.com/"
+        },
+        {
+            "id": "Daum",
+            "name": {
+                "zh": "Daum",
+                "en": "Daum"
+            },
+            "url": "https://www.daum.net/"
+        },
+        {
+            "id": "InternetArchive",
+            "name": {
+                "zh": "Internet Archive",
+                "en": "Internet Archive"
+            },
+            "url": "https://archive.org/"
+        },
+        {
+            "id": "Excite",
+            "name": {
+                "zh": "Excite",
+                "en": "Excite"
+            },
+            "url": "https://www.excite.com/"
+        },
+        {
+            "id": "Presearch",
+            "name": {
+                "zh": "Presearch",
+                "en": "Presearch"
+            },
+            "url": "https://www.presearch.org/"
+        },
+        {
+            "id": "You",
+            "name": {
+                "zh": "You",
+                "en": "You"
+            },
+            "url": "https://www.yousearch.com/"
+        },
+        {
+            "id": "sogou",
+            "name": {
+                "zh": "搜狗",
+                "en": "Sogou"
+            },
+            "url": "https://www.sogou.com/web?query=",
+            "iconUrl": "https://www.sogou.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,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"
+        },
+        {
+            "id": "360",
+            "name": {
+                "zh": "360搜索",
+                "en": "360 Search"
+            },
+            "url": "https://www.so.com/s?q=",
+            "iconUrl": "https://www.so.com/favicon.ico",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABKRJREFUWEfNV21sU1UYft57N2TgGPsijEHQTYgaP1dlOpwK2dwyWkI0GWBEDVk7IjFCojMzUeckgholfqcfqBONBhR13VcIBidkgmXERNFpDGKAGXG0qxP30fY+rgPm2nu7tdME789z3vc8z3ne57z3HMEF/uQC4+P/T4CkZLZaC0NBWSGCIgJzBMghOCBANyjHRNgmU6Y0esteP56oojEVCANntFhXaRo2gciLZ2ERuJVkqfWWO4/EEx+OMSQws3n9fGqDO0AsinehMXEhEXmp1Fxas1MqQxPl6wikN1UVa8RHILInSh53XmQPJKnSb37DN15cBIE0t61AwH0kp/0r8HPJItKRpU5d+lPFK4Ox1hslkN38wOyAFvCQnBsTXNApkHaIdINMAZgHSDnJnJgAgoZei+v+CQmkua3vg1xlGChoUVX1EW+F/bvo+RGzNttWktxCYr5RvqKKxbfM2WQ0N6JAWlOVCYQH1JtSEXnMZ3FunqgkuXvWZ575a3AXgVujYwVypNRSeq2RKUcIzHRbPyR5lw5EsMVvcdVOBH5+Pmt/TWrQ6ztA8EodCZE7ey3Oj3Xjl+ytm9r754keEtMjJkW67jCXXhXPURqbl+letyjI4EEDatt7Lc57dePpTbZlmqbp6qMo6hqf2f5uvLsfG5fWWNUKoDxyQ/BuNM/NrpM6bey4pDVaHwb4fNTuA8pUyfaVOvyTIuC2WkE6onOTpyhzesodv0YQmNlkfZEaN0axPeq3uPInAx7OyWipuikUxJe6fAU3+M2uzkgCbmsDycjaiHj8Fudk2vDI2tnu6gVDDP0YTUCFUuZd7tgdSaDRtpXQNvyXCmQ22wqDIe1AXAqkuW01SVro2fq+k6js9yIggucuztF2ZuXOOlny2unJlOHST9auf7zvxKtlA370qEmoT83FnotmQE3CPG+F60RUCdbdXtN3fG9t3z/eIIBtM2bVWVe3PTUZAvsbbju2eKBvtCsOiaA4+wpfxYrLsnSnwHTIluz85vv+64fOqGPBCPwi05OvkXsO/pEICToLikG0R3fVl1Nnf/XQ3S2Fuj4QHvjhzaIvFgYGinVAgu1iO6xrHrEI0XVzBkJDXwOcFx2zY1pW3co1u3WKjrRiOm68DgyFj4diQMIOyoNS3RkYTwm6iuYjNLgLYIE+TrqwMPVqWfJ50FCBsyRMz4CM0fflIBSpR5WnVUTCFhn9uG1xKoKD9wGsA5hpAB6EKEVi83iMNjB6H6DdlDzcPg8Y7+BcqsjPAA+DylGIlgIgH5BbQKbGVEekXmydT9JuygK4FYIyQE4Bsklshz6IuBHRbrocYAeA9ESMFxsc7VgwoyQsPR2mz0AujYhV1RLdnZB2U/6wCo0AdL/UBEm9hfT8dVK5c4h2Uw7Abr2/5G3DW/HZuva/B8CSICggEgLxqFR3vnA+l+8UzUL/wG8G/nCN+zKi3bQEwg0gzIYnJGJFCTs8fOF4Qqo7u6LB6Cj4FMTyMeMaRC2O62k2UhbBapCLIJIHMOyRwPDxPA3Bt6B0IDlll6zd93vMHhFWNTTwNBg2IU9BVTdLlactLgIJlyGBhAtO4G/gd78cOnd/XwAAAABJRU5ErkJggg=="
+        }
+    ],
+    "shortcuts": [
+        {
+            "id": "MicrosoftTranslator",
+            "name": {
+                "zh": "微软翻译",
+                "en": "Microsoft Translator"
+            },
+            "url": "https://cn.bing.com/translator",
+            "iconUrl": "https://favicon.yandex.net/favicon/cn.bing.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAbdJREFUOE+lk79LG2EYx7/PXdot9mzHiotStJ0K/QdykEZEcEoGFx1Kt1z9hVMglxangDHnJji4eiBk0UFNcBedtEhxsIKb5mo34/s+7XuXhFxMDLTvdC/P83ze7/e55yH856HH9UxIuhrenbEfO31LcJMSoODedtoAXL+r5G7fYUILQBUQR+f332hCXyXmBAD18q5EbeHO+fgjgIaV1AFB4NXs4eiDFMcE1EC0ASkFiKYBRHVNvL9ZjX9vhwSA5JYONyUM62AboIQWqY3criSuVKjf2htk6Bdg7Hhr5mQjt2EkANi2BtuWhlVmIuSrRXMJ2a3nfiyXujes8gqAOc+JabBzpHI7ALJsWBUVKHiOOd8K6LcqeQYveo6piv3HwoCGhXS5BMI4QQxVnfhPlfQyXRmQxOdMKP0qmlOdLdS7q5oopDgB8BvMmyBEAJr5q+pF09rno2dY/1ALK/BvwZ/om6sMa0IWABoDECGQC+BSWSBQpurElltt9B6ketOM9EEGRN9A+OoVzWwD0nuUlbjrCV3JNr6Uc2B88hzz9ROALtvV7H54GjsoeGI9FcRfrpTo0MR/2+s/4WHEEeCYZPoAAAAASUVORK5CYII="
+        },
+        {
+            "id": "GitHub",
+            "name": {
+                "zh": "GitHub",
+                "en": "GitHub"
+            },
+            "url": "https://github.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/github.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAjlJREFUOE+NU89LFHEU/3y+05psSWFFFxHbmXRmcWYFoUM36ZRQl+jQMTIUkaKuIRR06JSFWRLRn9Chy15i2XMg7uo6649ZE7oVRCQa5c73xXdWzQ2z3mnmvc/n89778nnEH5FxfZ/gECEXNNBlygpYE/IdgFe16lxlL4U7P47jHEaqdQJQww3OvqE1MN3K+p0wDH8aRCKQkFvSeQgG/kJsTosUWlR80YgkArYXvCAwojVKlsVpiIwKEEDwRQghcEJEQqXUpEh8HVDnAE5F1fIYzc6KLJmxSb5cCcvDwFWrq2+lba1U+moaZDL9xzo72zaKxWLddoOnJG4BEoMqR9sLnhC43ZhRXkfV+RsHreFkc5MQGTMYDU7Qdv0FktkkIexZXSwvHyjgBB1I4eN2w4qZ4BuBNi2ysbo4f/R/HtH2/E8ETwmwTsf1N0CmRaR+/EhLemZmZusfIspx/XXDMU3pZIMqBG7yApTBWjifP0jA7skNUEkhwYuEzHjBlAJGkwRQU5a+tFKpVPcTyXh9ZxX1252GIJ/xTE9vYCk1C8EjIVyIXBYl+UO0Hi4vlN8nPnH9fpLjIjJIMrUtrgXINZzo9T4X4ZCInLcs6yZisSW2rkXR7GdT7+7uP6mtreT7d2wbqcnKmu0k72ktm7WlcrGxVSMcL4h3b0SkgPr3wSiKfjQdk06lHytgxAA7TrenjPP2CGgjaI5JbW3eNWRT2xXYASbWVrwShXMPmibIBvfjWL/5sFSZ27vILznV7OjcrpDsAAAAAElFTkSuQmCC"
+        },
+        {
+            "id": "Gitee",
+            "name": {
+                "zh": "Gitee",
+                "en": "Gitee"
+            },
+            "url": "https://gitee.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/gitee.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAcFJREFUOE+lk81LVFEYxn/vzfnAGW0xYwyIQsRMYBEFbdoENmGOIC76F9yELULIhYFtbGsukjYtWvYPRJAgOIEGYgtBwVERhsEyZ5Ffc+/odE6c+fBeZ1Kwzuqe59znx/Oe9z1C3VojdkNTGgTdo5FOcyzoLMhnoeldnB/LXovUNpouf4adCUE90WDVgysglMZ6m6BtWFg5qmpQMf/8BPrB34yNmswkuJIykHKCVdregBoy382pJJGXIwRu38QKBBq8v/f22bh8FbCmrrPzVCo1Hy+Z2KG+h7R//HBuCF0qseaLlcsRfLckQ/S1Rj8zrs6FaYJ371BIz5F/8Qr1a7cBpg4LlDazZV2QSckQWdbQZYT40XfE5yPX85jC9CxWaxgJBk9BtOOg9g6qAFZkleg+6LBREjpfPsjee4TzdZF4cQvx+08BVLHIerC9qsnBhQHGmZGoC/CWUJ/AW0IolST2fgpl26w3d7gleC+xBtgeGsFOz51Et1rCRMaeE+pNUvgyT+5+v3uJ3jbWAGf1UStFrnsAOz3vttE7SNd2N7nU2tLYOseh+G2J/Og49mwtWXWQzN//Pcou5B8fkzfzRZ/zH7sE04uKwlBrAAAAAElFTkSuQmCC"
+        },
+        {
+            "id": "ChatGPT",
+            "name": {
+                "zh": "ChatGPT",
+                "en": "ChatGPT"
+            },
+            "url": "https://chatgpt.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/chatgpt.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAkdJREFUOE+dk09I2mEYxz9KUxgSQX+g2wRddJBgOELQ0VCJ3aMICsrhhoggdKiDoXgJVGiCiNscEv29dlpQIHjLwRC7tIFtR0EK8iAscY3nZT9xq132wu/we97n/TzP9/mj4+55ArwCngNm4Bb4DhSBd8Dn3ie6np+HwBvgJaC/Byymn8AHIAy0xKAB5PFH4Jky6nQ4HA4GBwcplUpcX1//zSsBLwSiASQ1v3j19fWRy+U4Ozuj0WiwsrJCtVql3W6TzWapVCoa7L1IFYBo/qSlvby8TLPZpFarsba2xsnJCfv7+xiNRgWIxWKcn59rcp4KIAe8FksqlcLtdjMzM8Pm5iZ+vx+fz4fL5eLi4oKDgwOmp6dZX1/XsngrgC/A48nJSTweD3q9nt3dXQqFgpIwMDBAJpNRUSX65eUlwWBQA3wVwA/AsLCwoC7tdjuHh4dEIhHm5+eV4/HxMfV6nWg0qmqSSCRURkBbADfAA7PZrDQnk0ni8Tijo6N4vV4F2NvbU9FnZ2c5PT1V3dnZ2ZGrm64E+ZNUR0ZGlLPFYiEcDnN1dcXQ0BBLS0vqk25IRuVyWZ4oCd0iSuSjoyPm5uYUoFgssr29TT6fJxQKKWlyv7q6+kcRu20cGxtT0cW51WqxuLjI1NQUGxsbWK1WTCYTW1tb2mOZStVGOd1BmpiYIBAIYDAYsNlspNNphoeHGR8fV/ZOp6MB8jJ8946y5tHf34/T6VR1kOLd3speqXNnlMUo+5AGfP+zTL3L0rvOj34v3Ld/rfMvOAPbSpFYQDQAAAAASUVORK5CYII="
+        },
+        {
+            "id": "DeepSeek",
+            "name": {
+                "zh": "DeepSeek",
+                "en": "DeepSeek"
+            },
+            "url": "https://chat.deepseek.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/chat.deepseek.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAf5JREFUOE+lkz9oU1EUxr/vvpRUWwtGRfwzBKogqFN1cBAcVCwmaXVpHcQODpqklYKCiEPWDkIgvtQiEjcVVNS0HQQXHYSE4iC6SREXsYoKahHzzifv2UAL6WLuds/l/L7vnHsO0eZhm/lYFdA/qu2e4ZgMr2YmOTd4TsmGh95pn8+Wiy4BxEweYybLE9wh6RuAHpIuAJOzPt+nszolWIl0I50b8fT3J+wCMRABUtmgSPJC63Ks1nBeKhYgCaoG6KuERZJbAZV4/Lz6nLM6wFXLEfTG5A7HaFcF5iIh6TU73BGmssEExV56fCFZH4STILuabgR9J7BWxGcKFYBXIOaqZUwCFNPZ4C7h6k/KvBYm9Y9qU0egKREnIgjxUOItwO4R7A5DznH34xLfRs/pXHDDgPUzvjfUVC0U5OYW7DbA06FX0g1Btl/gJUgL1bLbHKpHgExOZySbCuCSs2V+bEIOjahzXbfVIe5Z2VxNVH3vcjPGoxfVFf9l83KsTV9nOiSnxrTzRwLzPV+wV4G9BBmP+mZ6F4u7fY+KDL95qUIA6bwGZfZAxH1v0Z3VGoxDNqCYG0YDBwCrhDMBcLzqs9hikIBMTsMGuxkKEfgDMAHppxwqFBKgttG4RXCFapl3VjhoXv6Nr2UJHQS4AeQHgM+9GPzltls6+N+lansb/wJGO9RfBs3o9gAAAABJRU5ErkJggg=="
+        },
+        {
+            "id": "DouBao",
+            "name": {
+                "zh": "豆包",
+                "en": "DouBao"
+            },
+            "url": "https://www.doubao.com/chat/",
+            "iconUrl": "https://favicon.yandex.net/favicon/www.doubao.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAA4VJREFUOE9Vk21MU1ccxp9z7r2l0EpBixlSimNQMzbiWqEsBo0avwyXjL2kGvduB6gg29Qsc46g2cxkGYO4sAWBImYuS90+sYhuCfjKWGnCS9Tt40QHxVWLfW/vvecst5ku+384n/7PL+fJ+R2Cf8fLueAiRB3/k9slHXsvx0i3pFMopAJAgIVUnI0lY4nODWuMMw93tSjRDs45vQjQnDuslwp0Vyoe4SNDPeQP/xWIOj227miCzeHk+QV5JBZlA88W0yYtRghhRAtrkMl5jIFjI1OTSs/7r5K5m1NCXv5yRONx3FsKw2wuYC+1HmHrt70gJuPq5ZpiYfOjG/j+4ie5yhr0BiqP9HVK509/A6t1NRaCQaRjUZhMeYjFEwiFH6D921HZUmaTFJkN1BQL75CJeb6OMu4HIUo6EhS7Wl6BHI8hkUyhqrQELfv24jGLFb39A/h6cAjuti+xdeebSjzCRALqJL47fJBz9pZOT9n10WE6dPwQVFDYTAZ0dHwKk7UUaiwKQSeh8/Mv4F9MoK3/DIssqZQKwqAGuMUYs+YYKH7sasel4R8gyTJee24L1qx9Bo6qanBVwcT4OHSiCM/P17D7xPeQUyooFeY0gMIYE/R6ir6PGjA7cRWWFSswG7iHPa56NL++HYuBRXT0D+HpslJkryzBE/UNQJqBUKo+AmRlUZz8cBemfr2CHTV2QMpGbV0d1jkqEZwPoPHgx2hudMO2chlCT9YhKRk1BzKATIXsbIpTR1vx2+gFvGx/Cvv3vwsYc5GIhAFCoU8mEbgfQtpkxv3VtVCoTnvFTAUPY+rbOUaBedpaqP+Xn5CftxyfHGiGraIS0elJ6AtX4W5KwXeXprHtg2OQEyqjRND8OUV8c7yaE+6TdES5MT4mTpzzIsUFWIos2F5ugrmoGNO3AjjWfQKljg042N2DcEhRqCCKjKIqo/Lkbd7PAHeWHjInkAzLgMRiEHTEg3R4CUubdsNcbgVROBIJyIQQCQR9ziLS+D+VOWMbTSaqXLvoo5WR67SyvARpWcHtuyGcufG3ai2r4I71m0QiCJerV+E/lY9wTivOniUWZ31vd3ure9h7mrtffJ58dfQwIAn4fWYWtW/s4bKikL2HPvMcP7yvSftIAFimgjZer1dwuVyqJElrrY+XHZAVZXNBrqHQabfjqm9y4UE8PWbMze26OeOferir5f4By0uf44tyiuwAAAAASUVORK5CYII="
+        },
+        {
+            "id": "Kimi",
+            "name": {
+                "zh": "Kimi",
+                "en": "Kimi"
+            },
+            "url": "https://kimi.moonshot.cn/",
+            "iconUrl": "https://favicon.yandex.net/favicon/kimi.moonshot.cn",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAhlJREFUOE99k8FrE0EUxn9vN01CDr3Eg0qCJ21v3vMnlHpoaCgq9pBTQ3upTQKioRAUhJKQS2x7FZTQGDyE4Emwhxz9AxJaSCXF+geIacjO2pkmS+zaPpid2dnZb973vvcJl/EEeAPcAULjvf9PYg1w3TNwXwEfBHgGvBcRR0Rs13XRYxKWZZnl5b5ZAeKAawOrGqADPJh8uXqtiJifA4EAIyVw/xH02y6/fwlIVyzL+qOUCi8sLNBqtdje3qZYLBIMBhkOhxQKBfP+4vk6bz+fYWcbON9q8OkxWIFzDeAqpUgmkzQaDcrlMltbW+bGcDhMr9cjGo1y7+4tfsw8RFa/4n5Zh+/vQGx8AKVSiWw2a5isra2xu7vL3t4emUwGOzCDo1xQI4+pD2B/f59cLkckEqHdbjM7O0sikeDo6AhTD3TZdMWUmTyAVCrFwcEBo9HIpD8JTU8rUa1W2djYwLZtHMfxZ7C8vEy9Xqff73NycuLV4PDwkHg8ztLSErFYjNPT03+E8lHY2dkhn8+bm3TKOqNarcbKygrz8/N0Op1LKuNe8QFUKhU2NzcJhULm4GAw8ADm5ubodrs3A0zLqHOdzuA6gIFSKrS4uEiz2TRNo5tpmoJWJp1OGwrHx8fTGQy8VhYRV/TjiheMVCJmaEXGYQxxYcKuZybAsSzLZ6ZrALSOnpn0mafAa+A2EL7RznAO/AReXpjw41/r/xR+noyl9QAAAABJRU5ErkJggg=="
+        },
+        {
+            "id": "Claude",
+            "name": {
+                "zh": "Claude",
+                "en": "Claude"
+            },
+            "url": "https://www.anthropic.com/claude",
+            "iconUrl": "https://favicon.yandex.net/favicon/www.anthropic.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAh5JREFUOE+dk8FrE0EYxd9sEiwkNfkn3IJBMeccTRBNsKcSU2loClEs1R4kqz1IZZvaaiVJKVSJB0kKJbanemziaSV3RSmN19zTNcFsdje7ZUZ3s4VCiQMDu8M3v+/NmzdE05Rbpmm8Ach1jDZ+cBwRiKr++fYfm61WP4mq9gwAxNmcEAI6TdNky9a39e+oNSngb9W/QYu73S6bgUAAHMeh3W7D6/XC5/PZULveCaCbdV2HKOZweFjD3Nws4vEYFhaeIBgMYnn5Bdxu9xnIGQUulwvHx00kk/fRarUQCt1AufwRudwrSJKEvb1PmJjgMRgMhoqdCihge/sdisVNhMNhSNJXbG1twuPxIJN5iGz2KebnH50PoPJl+TdmZlLs3LncCjKZBwiFQhDFl0il0nC7XdjZqcDvvzw02FJAz1ar1VmnWOwOpqeTyOcL7Ej7+1XU61+QzxdRKr1HNBphXrEbogDa3TAMCMJz7O5WMT7uY91UVUOv18PS0jNEo1FMTSUQidzExsZrppJeKwPQszebv5BI3APP80inZxld0zQUCkXmfKVShiiuoNFoMDN5/grzwgYcHHxm5glCFrFYHKY5ACEcSqUPqFarWF9fgyzLWF1dw+LiY0xO3h0CrPAoigK/389cZ/IIQb/fR6fTYUGi6ycnMsbGLtmhsqPsjK8zshfEmkX5O4Broz1Eu/qI6Lpy2zDMtwCujgg5os/5FG//GguXNPHaAAAAAElFTkSuQmCC"
+        },
+        {
+            "id": "WenXinSaid",
+            "name": {
+                "zh": "文心一言",
+                "en": "WenXinSaid"
+            },
+            "url": "https://yiyan.baidu.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/yiyan.baidu.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAvtJREFUOE9Vk1toVFcUhr+9z8yZTCZXx2RSLzFeCEyoxUZjJhKp+KBvYhFEEMlDI/ZBrVjihUqKlgZfVEQQL9QHL2hpCfRJLKllBKutN7RqHDGJNZdqTGKSmcw4zjl7y5kzXrIf917rW/9e/L/QWq8BzgB+AKVBazAkPE+C14Cgz70XAoRT5J4UsEForYeAoHaaFUjpvp7pVOy/ZZPnk7TWSVZXCbI1DvwDZdgB2BqkM1UK+LvfYs+VNDcHFV5nvCFRhmTpTA8/LpbUlE5So4TSWjvA53FFa0ec9kdveK0Ec8tNvv8in7E3gsN3LIYzoA2DDWGDXQsExaar1FGgn45YRA79T1JBwO9hY0MRO5bmEzCdPwuivYqvLqXxeuGVZVBWYNCxyiDkzwGu97xm2aE+ZofyaG+uIBzyZOlxC9qiSc49yGThwQIPeaakPyW4uNpHXUi4Cm70pIi0PaUxXEh0+4xs8/mLMb650MfE7E/x+yRrPguwd5mfL9tTPB5TdKzN5/Ny6QL+6U5Sv7eLJeFCru6qQgGzGo/S1ztI49YmDq6rpG66gaUgcipOtwNYX0BthZEDPJmgfk+MSE0R11rnYQPzt92gZ2Cc2MnlVBaLbLNz6o+/4smYzeWmEhZ+4nkHSFDf8pCG+SX8ta+adEaxqK2XgYTm9u4ZzJriIWNrDClYdGSIrlGbP5uD1E7LAa52jtPYcp+Z0wNc+HYeS6oD1Ox8TP+4xd0fqqma6i7191iKTb+MMJjS/LGpnEil6Sp49jJN7eY7DCcsPH6T5hUhLndOMDBuEzsQzlq45deX/HZ/AgvBnAo/0c0VTA3klujQRxMW353+j58uvSCd0ZQGfUivl6blZZy9NspgwmZKscmWFWXsXFmK3+v62bWydqyskVLwb0+SLce6iN4bo7DEJJkRaEOyqiHIgfXTmFNmfhws9T5MDs1WGilEVvLPV4bYdqKbwgIvR76ey8oFRZOSmktkNkyT4uyESml34yNxC48hKMo3JsE/jvNb+/JbXs4s3VAAAAAASUVORK5CYII="
+        },
+        {
+            "id": "LingMa",
+            "name": {
+                "zh": "灵码",
+                "en": "LingMa"
+            },
+            "url": "https://lingma.aliyun.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/lingma.aliyun.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAA21JREFUOE9VU1tsVFUU3Xuf+5y5M51CDaY+AtGIr0ITJNZXMGI0JQJSmaIdtYTy6geBECBAjNwaOiJGibFKorXIh7FMNSFNA4rRGFPlA4vxgUof0TIxpLW1dJ6dO3PONncmGl0/Z+dk77VXVvZC+A8SCRbNzSjfODzXPZviNgkIpg1dBzusHYkoi+Y+lH47M6P/ImKlAGB0XUDXRVUfmalPDIa+m5zgUu8Jj6oXEJHg+4K2+t0KkOY4NgoHcq2tOF0m8Yf9IpEA8re/dzT3+aa99iN/jCsZ35cXgWpi3UQ0bAQrgGAHEYIOZoKoLWrZhlPl4a2N124ZuSQtR0DDq6eruhcvEfKVXVn88XuFdoQADVS6heCTGDaoQJB0J4Q9e/Ybbbjy3syChnvwt+27LXv6quISgVq6XBPJYcma4etDAKpoFQKAAdmygM59UroYe95Yhltjmd7sFG/Y61qFpQ2a/s2nRV54t6DaG/yp/0OWAIQGcmxEafFDhft7Pgycx7anM19xnh+qCYF6+X2HvAJzZ0tKeXlGNgjAQGATEU3kVS2msmxQV8ZZHHVzi4dGI2O45an0XYj4U/aqVLF2ExtjJg5+XFDv7smQc70AZSCk8wBN2y3VtMkkKUEhAr3T5Q207zRXl03cvCb9NpW4XS+yjPc6FJ5H2Nk0q66MSaIgQfA64iMfhcErMA6c8lRzm8mjw0rs25F/rEwQa5wOO6Qn85Mq/Og6XT13IEC/ni+q1zamqKQjbD7iqAeeMOjsKU91vz6Hh94K8u11gj444Y1WFKzOL6JScVh4LHITEl5KhODmOzR8c0tKTU0wdvRX4ey04gPPZkAKVJ5CiQYamo2DFYIn06dhjtdazKomAnjbEo2fORigr894MhwErFth0MnOHH/RX4TAfALWkFlHIp3rygTboukXc5OqY/dhu1D/oK4Bg28cXvzMkyvWGnrysuSODSllVJOQBC+wRX1SA+zpD19GPxi+q/tbs6OtO82FXpZZE4AjP0hYvlJXtbcKOrYxpX4eKpEeEb8cH4zc6QKT699U5b4qiC77q2pgKB9GkHL+TQDJpBe4MHDjhXANVcXXXZOhWqFJxFXHv513Nhpl0dcHCuDfNFYS6X+UycoNKOPrZ3blZ/jYn+MSNBPPdV2qedx9mDX3Syz9s/hv+WiBTBiyJqcAAAAASUVORK5CYII="
+        },
+        {
+            "id": "TongYi",
+            "name": {
+                "zh": "通义",
+                "en": "TongYi"
+            },
+            "url": "https://tongyi.aliyun.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/tongyi.aliyun.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAlBJREFUOE+lk81LVGEUxn/n3rl3xvlgGsNFFrbJqNwlUYb9F9GitFBoUyS4kIpSZzIKklz0D0ThKhAK+g/sg+iLCIu0FhFiEJMfN7U79+ON9x2vTotWndXl5dznPM9zniPlsrJmZpBC+uewUpxBaAEygMXfFQO/UfwQ4Z7nN491dKBE9/T1VKeBbkAB5k0E4hgsC5R+3aqk58ndye3HpL+nWlYwCtQAV/clHU1NwuqqwnG2QDRo0itQkb6e6izQnkzVE30fLl8tkHKEh1PrvH5Vw3UhiiCdNgSTmtMAHpDXlKMQVryY4yeynOzN8nTap1CwjKiWFovFxZjxm16jrF8aIBTB9n3F/gMOxaJFV7fLwU6X+fmIXE7I5wXLEmIFNyorfPkcJrIiDRCLILYNt++UcB14/szHTomZqmmHgSIIMT8+frRuZGx4oTSAqutWDJeLtO22yTQJgxeW+PY1MvRbd1qMVIpoU6+XVwyzxFgDoPUHNdjVZnN+IE9xm8X3hYhrw8tmI6NjRZqbLVxXWNh4T2fqLIwEvfaExbmBgjHp8BGXiXHPSBi6VODlixrZnJBKCRO3PILAhMNIMCbWaor2vQ6nTmcJaoo97Y5Z345Wm1JJDO337wJmP4V8/BAYH5TCmLi1xgj6z+boPOTgeYq3bwK6jrpmM5P315h6sGa+U6nNYJk1bgZJcwrDehaDAPbtd7h4pcDyUszQ4BKZjBhJDdGek77eagXFSBJPrT8pDVYqWSbOWrM2e6NM7E2U/3VMSaee1vBj46nUj+l/z/kPh9MXqEv3NgsAAAAASUVORK5CYII="
+        },
+        {
+            "id": "TAPD",
+            "name": {
+                "zh": "TAPD",
+                "en": "TAPD"
+            },
+            "url": "https://www.tapd.cn/",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAttJREFUOE9lk29olWUYxn/387zvOTunbR03DTKwgZkyGf3xgw3RsKCybG0ioRSaIqL9kQTX0DUYEZobFCU0igWSJOSXPoRBiBt+2GZfNPCDqcP8A05N9+fMuXPO+77PHe95cyrd8PDwwHVd93Vf3I8ABGtX7yY0bU7NoyktcKxiKW/UdlKJQ8XEEJxCIYCUjU8wWeVPdV3+etbnEqxb1cF06rMYE4k1aabYkdvJgeyrZEqO6ZLBelCdgSV1cPoSFCMiQW3Wv9MuQcubozgzCxF1YSQUijw99yfGKmfz/DxYtgCWPQWNCyCXgZf2w8AwWuEjhnBUgqa3HEYEVeyT85h4tpH+59azYr5SWyVl+3GFEXgWun6Dtp8hVwmRAwmamxVrsT09MGdOGXyPFs+tCtYk99+3oKcfvjkGGT/JRYKWFqVYxHZ3I/X1oBGInQnOCPSegL1H4foEBFFCvlcSrGlRncjjbd1KoWktv/6p9J+3tK2CusRQuev7B6G2CkKXdL4v0NSskVHSNqA7s55P0u/CpOOHDw2blyewi/9Aw6fg24fJ5XHDd17T8FY16fQdXn7sS/6oWEhhStm8Qvj+vcRyTKxvhyu3wQo8YABxg55K30KGz7zAMzW9pNQRqOGJHPz1RZJ+LPDBIfj2OOQeSdKfGSEcSqmtLnFgsJUdQ13k0hGKpRTBqU5Y9HgC/XEANvZCLvs/AV+tDXj9aB99IyvJeiGKx/gU9GyEbSsTwtVRWNwOvgfuYQe+Wj9gz9BX7Dv1MdY6KlOGfMGxodFwcMv9HJZ0wtlriUi8F4CKnjS3FakRE+ngyIty6MImfrn0NvnpDHNr4PB2x9AwDFwwnDgHd4sQ7+1/+zYWC+wG9qqaSL3IGk85cr2Bj860wo3ljI/VUSoqNiVkUmVy+XMCRoWO8lNP0gGmNVRT5Ylj182l/F6YTRbh7ngD+ZFXyN9sJIpmVnACZf/kd7LvX+poL0DWv53mAAAAAElFTkSuQmCC",
+            "iconUrl": "https://favicon.yandex.net/favicon/www.tapd.cn"
+        },
+        {
+            "id": "Bilibili",
+            "name": {
+                "zh": "哔哩哔哩",
+                "en": "Bilibili"
+            },
+            "url": "https://www.bilibili.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/www.bilibili.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAepJREFUOE+NkztvE0EUhb+7dmDXD0UpKSlAiU2DLARCiNAg8QdIAShOOqo00BN6KAgNXWLzKJJfENEQBBJIiWhYW4KCkjKJEtsLwTPkznq9ayOknGZmduac+zh3BYW1goilGd7H8pl69QvrNsec9N19sm+EFxEuM199kXBkSF5r1xC7DRxiuMli5ZMjKlRotXUFj7dACfEuMT+9rdxY4DHCshga4WuQO07EerdYmP7oBF62r2LspiNj31Cv3mXZejzCiovSbT9BuAf4QMGRYvwZrPnMty4QYXlFYeah0Gw/w9qlzGM7eJysCVcGm2TNI7IiNFt7WCaxzLJQec/qD59ix7AbjQpM+UKn6LF4NmKtdR1hC2FfaLS0032ibpGpmqHFeORM9seOVBB2dzz8QgfIJQIGE5SdeiP84Bj16jXXKEXc4PS7Zun1DgAvzSAwJfe45+kFRN0SP2vxHJzZyeEXDt0+MOXBOz0PM+izP1Fm6dyvE2Ww8v00k0caKFNCYIrcrh4NC9bJzELnJcFGOEHP0x5kStAmnj9ISVs3zIjA7Lu4H4pvZUmbOG7j+tdT/1iYENXKuQu/hzbC3vggjUYdNTB70mzyIM/jUe61n6pxQPH/nJEbrb9BMPMg/RvVc7XrJFB7dTaOG/sXiyLgAG+KlOIAAAAASUVORK5CYII="
+        },
+        {
+            "id": "ZhiHu",
+            "name": {
+                "zh": "知乎",
+                "en": "ZhiHu"
+            },
+            "url": "https://www.zhihu.com/",
+            "iconUrl": "https://favicon.yandex.net/favicon/www.zhihu.com",
+            "iconImageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAWFJREFUOE9j5Gp7cYSFidmagQzw59/fo4x8Ha//w/Q6S7Iw7H3+hySj4Aao8zIxnMoSYohf8ZFhw8PfRBsCN6DJkpMh14aLgZERoZeRkZFBovsNw4tSEQwD+TvfgMXgBtzNFmJo2PWFYe29XwzPS0QYYAo4mRjABoh1QzSwMTEwPClGyKN44cX3fwzf/jIwvCkTYRDpesPw+z8DA8wAmIHsTAwMr0qxGIDsxo/lmC6AGcDKCLEAwwunEgQY1MVZMPwKCwPBrjcM//4zMDAxMjC8x2YAIRcQbUCBPjtDowcvQ822zwyTL/+EhwEsTEAWIXsRJSHBJNdd/M4QpM/JULTpM8Oymz/BsUCUAYEKrAxzQ/kYhLrfMjhJsDCsjxeApwNQoIFshgGMQITZvuDUd4b8/V/B6iKU2RhW3P2FEXDI4QX3wio/XoZ1V3+CNWADoNAHxQI6wAgDojMBVCEjpdkZAKU/u4mubz+QAAAAAElFTkSuQmCC"
+        }
+    ],
+    "languages": {
+        "zh": {
+            "languageName": "简体中文",
+            "languageCode": "zh",
+            "languageDisplay": "中",
+            "pageTitle": "搜索首页",
+            "menu": "菜单",
+            "edit": "编辑",
+            "export": "导出",
+            "import": "导入",
+            "searchPlaceholder": "搜索或输入网址",
+            "addShortcut": "添加快捷方式",
+            "editShortcut": "编辑快捷方式",
+            "shortcutName": "名称",
+            "shortcutNameEn": "英文",
+            "shortcutUrl": "URL",
+            "remove": "删除",
+            "cancel": "取消",
+            "save": "完成",
+            "exportSuccess": "快捷方式数据导出成功",
+            "noExportData": "没有可导出的快捷方式数据",
+            "dataManagerUnavailable": "数据管理器不可用，无法导出数据",
+            "importConfirm": "是否要导入这些快捷方式？这将替换当前的快捷方式。",
+            "importSuccess": "快捷方式数据导入成功！",
+            "importFailed": "导入失败: ",
+            "invalidImportData": "导入的数据格式无效"
+        },
+        "zh-TW": {
+            "languageName": "繁體中文",
+            "languageCode": "zh-TW",
+            "languageDisplay": "繁",
+            "pageTitle": "搜尋首頁",
+            "menu": "菜單",
+            "edit": "編輯",
+            "export": "導出",
+            "import": "導入",
+            "searchPlaceholder": "搜尋或輸入網址",
+            "addShortcut": "添加快捷方式",
+            "editShortcut": "編輯快捷方式",
+            "shortcutName": "名稱",
+            "shortcutNameEn": "英文",
+            "shortcutUrl": "URL",
+            "remove": "刪除",
+            "cancel": "取消",
+            "save": "完成",
+            "exportSuccess": "快捷方式數據導出成功",
+            "noExportData": "沒有可導出的快捷方式數據",
+            "dataManagerUnavailable": "數據管理器不可用，無法導出數據",
+            "importConfirm": "是否要導入這些快捷方式？這將替換當前的快捷方式。",
+            "importSuccess": "快捷方式數據導入成功！",
+            "importFailed": "導入失敗: ",
+            "invalidImportData": "導入的數據格式無效"
+        },
+        "en": {
+            "languageName": "English",
+            "languageCode": "en",
+            "languageDisplay": "En",
+            "pageTitle": "Search Homepage",
+            "menu": "Menu",
+            "edit": "Edit",
+            "export": "Export",
+            "import": "Import",
+            "searchPlaceholder": "Search or enter URL",
+            "addShortcut": "Add shortcut",
+            "editShortcut": "Edit shortcut",
+            "shortcutName": "Name",
+            "shortcutNameEn": "English",
+            "shortcutUrl": "URL",
+            "remove": "Remove",
+            "cancel": "Cancel",
+            "save": "Save",
+            "exportSuccess": "Shortcuts data exported successfully",
+            "noExportData": "No shortcuts data to export",
+            "dataManagerUnavailable": "Data manager unavailable, cannot export data",
+            "importConfirm": "Do you want to import these shortcuts? This will replace your current shortcuts.",
+            "importSuccess": "Shortcuts data imported successfully!",
+            "importFailed": "Import failed: ",
+            "invalidImportData": "Invalid import data format"
+        }
+    }
+}

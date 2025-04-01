@@ -27,25 +27,74 @@ export const useDataStore = defineStore('data', () => {
 		error.value = null
 		
 		try {
+			console.log('开始加载数据...')
 			// 先尝试从本地存储加载
 			let data = await storageService.getData()
+			console.log('本地存储数据检查结果:', data ? '找到数据' : '未找到数据')
 			
 			// 如果本地没有数据，从默认配置文件加载
 			if (!data) {
+				console.log('本地未找到数据，尝试加载默认数据...')
 				data = await storageService.loadDefaultData()
+				console.log('默认数据加载结果:', data ? '加载成功' : '加载失败')
 			}
 			
 			// 如果成功获取数据，更新状态
 			if (data) {
+				console.log('成功获取数据，更新状态...')
 				engines.value = data.engines || []
 				shortcuts.value = data.shortcuts || []
 				defaultEngine.value = data.defaultEngine || ''
+				
+				console.log(`加载了 ${engines.value.length} 个搜索引擎`)
+				console.log(`加载了 ${shortcuts.value.length} 个快捷方式`)
+				console.log(`默认引擎ID: ${defaultEngine.value}`)
+				
+				// 确保保存了最新的数据到本地存储
+				await saveData()
 			} else {
 				// 如果都失败了，使用空数据
+				console.error('无法加载数据，使用空数据')
 				engines.value = []
 				shortcuts.value = []
 				defaultEngine.value = ''
 				error.value = '无法加载数据'
+				
+				// 最后尝试直接解析 default.json
+				console.log('尝试最后的备用方案，直接解析 default.json...')
+				try {
+					const defaultData = {
+						engines: [
+							{
+								id: "google",
+								name: {
+									zh: "谷歌",
+									en: "Google"
+								},
+								url: "https://www.google.com/search?q="
+							},
+							{
+								id: "bing",
+								name: {
+									zh: "必应",
+									en: "Microsoft Bing"
+								},
+								url: "https://www.bing.com/search?q="
+							}
+						],
+						defaultEngine: "bing",
+						shortcuts: []
+					}
+					
+					console.log('使用内置默认数据...')
+					engines.value = defaultData.engines
+					defaultEngine.value = defaultData.defaultEngine
+					
+					// 保存内置默认数据
+					await saveData()
+				} catch (e) {
+					console.error('备用方案也失败:', e)
+				}
 			}
 		} catch (e) {
 			const err = e as Error

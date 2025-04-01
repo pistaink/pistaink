@@ -1,8 +1,5 @@
 <template>
 	<div class="drawing-container">
-		<div class="drawing-header">
-			<h3>绘画板</h3>
-		</div>
 		<div class="drawing-tools">
 			<div class="tool-group">
 				<button 
@@ -263,6 +260,7 @@ function handleTouchMove(e: TouchEvent) {
 // 清除画布
 function clearCanvas() {
 	if (!ctx || !canvas.value) return
+	
 	ctx.fillStyle = canvasBackgroundColor.value
 	ctx.fillRect(0, 0, canvas.value.width, canvas.value.height)
 }
@@ -272,180 +270,149 @@ function saveImage() {
 	if (!canvas.value) return
 	
 	// 创建下载链接
-	const image = canvas.value.toDataURL('image/png')
+	const url = canvas.value.toDataURL('image/png')
 	const link = document.createElement('a')
-	link.href = image
-	link.download = `drawing-${new Date().toISOString().slice(0, 10)}.png`
+	link.download = `pistaink-drawing-${new Date().getTime()}.png`
+	link.href = url
 	link.click()
 }
 </script>
 
 <style lang="scss" scoped>
 .drawing-container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 	width: 100%;
-	max-width: 800px;
-	margin: 0 auto;
+	background: white;
+	border-radius: 8px;
 	padding: 16px;
-	background-color: var(--card-bg);
-	border-radius: var(--border-radius-lg, 12px);
-	box-shadow: 0 4px 12px var(--shadow-color);
-}
-
-.drawing-header {
-	margin-bottom: 16px;
-	text-align: center;
-	
-	h3 {
-		margin: 0;
-		color: var(--text-color);
-		font-size: 24px;
-	}
 }
 
 .drawing-tools {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 16px;
-	padding-bottom: 16px;
-	border-bottom: 1px solid var(--border-color);
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 16px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #eee;
 	
-	@media (max-width: 576px) {
-		flex-direction: column;
-		align-items: flex-start;
-	}
-}
-
-.tool-group {
-	display: flex;
-	gap: 8px;
-}
-
-.tool-btn {
-	width: 40px;
-	height: 40px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 20px;
-	background-color: transparent;
-	border: 1px solid var(--border-color);
-	border-radius: 4px;
-	cursor: pointer;
-	transition: all 0.2s ease-in-out;
-	
-	&:hover {
-		background-color: var(--background-color);
+	.tool-group {
+		display: flex;
+		gap: 8px;
 	}
 	
-	&.active {
-		background-color: var(--primary-color);
-		color: white;
-		border-color: var(--primary-color);
+	.tool-btn {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		border: 1px solid #ddd;
+		background: white;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		
+		&.active {
+			border-color: #0066cc;
+			background-color: #e6f2ff;
+		}
 	}
-}
-
-.color-picker {
-	display: flex;
-	gap: 4px;
-}
-
-.color-option {
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-	cursor: pointer;
-	border: 2px solid transparent;
-	transition: all 0.1s ease-in-out;
 	
-	&.active {
-		border-color: var(--primary-color);
-		transform: scale(1.2);
+	.color-picker {
+		display: flex;
+		gap: 4px;
 	}
-}
-
-.background-selector {
-	display: flex;
-	align-items: center;
-	gap: 8px;
 	
-	span {
-		color: var(--text-color);
-		font-size: 14px;
+	.color-option {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		border: 1px solid #ddd;
+		cursor: pointer;
+		
+		&.active {
+			border: 2px solid #0066cc;
+		}
 	}
-}
-
-.bg-color-option {
-	width: 24px;
-	height: 24px;
-	border-radius: 4px;
-	cursor: pointer;
-	border: 2px solid transparent;
-	transition: all 0.1s ease-in-out;
 	
-	&.active {
-		border-color: var(--primary-color);
-		transform: scale(1.1);
+	.size-selector {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		
+		.size-slider {
+			width: 100px;
+		}
+		
+		.size-value {
+			min-width: 40px;
+			text-align: center;
+		}
 	}
-}
-
-.size-selector {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.size-slider {
-	width: 100px;
-}
-
-.size-value {
-	min-width: 40px;
-	text-align: right;
+	
+	.background-selector {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		
+		.bg-color-option {
+			width: 20px;
+			height: 20px;
+			border-radius: 4px;
+			border: 1px solid #ddd;
+			cursor: pointer;
+			
+			&.active {
+				border: 2px solid #0066cc;
+			}
+		}
+	}
 }
 
 .canvas-wrapper {
+	width: 100%;
 	background-color: white;
-	border: 1px solid var(--border-color);
-	border-radius: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 	overflow: hidden;
-	min-height: 300px;
 }
 
 .drawing-canvas {
 	display: block;
-	background-color: white;
-	cursor: crosshair;
+	width: 100%;
+	background: white;
 }
 
 .canvas-actions {
 	display: flex;
 	justify-content: flex-end;
-	gap: 16px;
-	margin-top: 16px;
-}
-
-.action-btn {
-	padding: 4px 16px;
-	background-color: var(--primary-color);
-	color: white;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 16px;
-	transition: all 0.2s ease-in-out;
+	gap: 12px;
 	
-	&:hover {
-		background-color: var(--primary-color-dark);
-	}
-	
-	&:first-child {
-		background-color: var(--danger-color);
+	.action-btn {
+		padding: 8px 16px;
+		border: none;
+		background-color: #f0f0f0;
+		border-radius: 4px;
+		cursor: pointer;
 		
 		&:hover {
-			opacity: 0.9;
+			background-color: #e0e0e0;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.drawing-tools {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+		
+		.background-selector {
+			.bg-color-option {
+				width: 16px;
+				height: 16px;
+			}
 		}
 	}
 }

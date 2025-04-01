@@ -133,12 +133,15 @@ const newEngine = ref<{
 
 // 选择搜索引擎
 function selectEngine(id: string) {
+	console.log('选择搜索引擎:', id);
 	dataStore.setDefaultEngine(id)
 	isEngineDropdownOpen.value = false
 }
 
 // 切换搜索引擎下拉菜单
-function toggleEngineDropdown() {
+function toggleEngineDropdown(event: MouseEvent) {
+	event.stopPropagation(); // 阻止事件冒泡
+	console.log('切换搜索引擎下拉菜单');
 	isEngineDropdownOpen.value = !isEngineDropdownOpen.value
 }
 
@@ -223,19 +226,22 @@ async function saveNewEngine() {
 
 // 点击外部关闭下拉菜单
 function handleClickOutside(event: MouseEvent) {
-	const target = event.target as HTMLElement
-	if (!target.closest('.engine-selector')) {
-		isEngineDropdownOpen.value = false
+	const target = event.target as HTMLElement;
+	// 如果点击的不是引擎选择器内的元素，则关闭下拉菜单
+	if (isEngineDropdownOpen.value && !target.closest('.engine-selector')) {
+		console.log('关闭搜索引擎下拉菜单');
+		isEngineDropdownOpen.value = false;
 	}
 }
 
 // 添加和移除事件监听器
 onMounted(() => {
-	document.addEventListener('click', handleClickOutside)
+	console.log('SearchBox组件已挂载');
+	document.addEventListener('click', handleClickOutside);
 })
 
 onUnmounted(() => {
-	document.removeEventListener('click', handleClickOutside)
+	document.removeEventListener('click', handleClickOutside);
 })
 </script>
 
@@ -244,29 +250,33 @@ onUnmounted(() => {
 	width: 100%;
 	max-width: 700px;
 	margin: 2rem auto;
+	position: relative; // 添加相对定位
 }
 
 .search-container {
 	display: flex;
 	align-items: center;
-	background-color: var(--card-bg);
-	border-radius: $border-radius-lg;
-	box-shadow: 0 4px 12px var(--shadow-color);
+	background-color: var(--card-bg, #ffffff);
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
 }
 
 .engine-selector {
 	position: relative;
+	z-index: 100; // 增加z-index确保下拉菜单在上层
 }
 
 .engine-button {
 	background: transparent;
 	border: none;
-	padding: $space-sm;
+	padding: 8px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-width: 40px; // 确保有足够的点击区域
+	min-height: 40px; // 确保有足够的点击区域
 	
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.05);
@@ -276,7 +286,8 @@ onUnmounted(() => {
 .engine-icon {
 	width: 24px;
 	height: 24px;
-	border-radius: $border-radius-sm;
+	border-radius: 4px;
+	object-fit: contain; // 确保图标不被拉伸
 }
 
 .engine-dropdown {
@@ -284,17 +295,19 @@ onUnmounted(() => {
 	top: 100%;
 	left: 0;
 	min-width: 300px;
-	background-color: var(--card-bg);
-	border-radius: $border-radius-md;
-	box-shadow: 0 4px 12px var(--shadow-color);
-	padding: $space-md;
-	z-index: 10;
+	background-color: var(--card-bg, #ffffff);
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	padding: 12px;
+	z-index: 1000; // 增加z-index确保在最上层
+	margin-top: 4px; // 添加一点间距
+	border: 1px solid var(--border-color, #e0e0e0);
 }
 
 .engine-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: $space-sm;
+	gap: 8px;
 }
 
 .engine-item {
@@ -302,20 +315,20 @@ onUnmounted(() => {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: $space-sm;
+	padding: 8px;
 	background: transparent;
 	border: 1px solid transparent;
-	border-radius: $border-radius-sm;
+	border-radius: 4px;
 	cursor: pointer;
 	
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.05);
-		border-color: var(--border-color);
+		border-color: var(--border-color, #e0e0e0);
 	}
 	
 	&.active {
 		background-color: rgba(0, 0, 0, 0.1);
-		border-color: var(--primary-color);
+		border-color: var(--primary-color, #007bff);
 	}
 	
 	.engine-name {

@@ -1,7 +1,10 @@
 <template>
 	<header class="header">
 		<div class="header-container">
-			<h1 class="logo">{{ t('app_title') }}</h1>
+			<!-- 插件容器 - 左侧 -->
+			<div class="header-plugins">
+				<slot name="plugins"></slot>
+			</div>
 			
 			<div class="header-actions">
 				<!-- 语言切换 -->
@@ -61,8 +64,10 @@ const isLanguageDropdownOpen = ref(false)
 const isSettingsOpen = ref(false)
 
 // 切换语言下拉菜单
-function toggleLanguageDropdown() {
-	isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
+function toggleLanguageDropdown(event: MouseEvent) {
+	event.stopPropagation(); // 阻止事件冒泡
+	console.log('切换语言下拉菜单');
+	isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value;
 }
 
 // 切换主题
@@ -75,6 +80,7 @@ function toggleTheme() {
 
 // 切换语言
 function changeLanguage(lang: string) {
+	console.log('切换语言至:', lang);
 	i18nStore.setLanguage(lang)
 	isLanguageDropdownOpen.value = false
 }
@@ -90,31 +96,32 @@ function openSettings() {
 
 // 关闭下拉菜单的点击外部事件监听
 function handleClickOutside(event: MouseEvent) {
-	const target = event.target as HTMLElement
-	if (!target.closest('.language-selector')) {
-		isLanguageDropdownOpen.value = false
+	const target = event.target as HTMLElement;
+	if (isLanguageDropdownOpen.value && !target.closest('.language-selector')) {
+		console.log('关闭语言下拉菜单');
+		isLanguageDropdownOpen.value = false;
 	}
 }
 
 // 添加和移除事件监听器
 onMounted(() => {
-	document.addEventListener('click', handleClickOutside)
+	console.log('Header组件已挂载');
+	document.addEventListener('click', handleClickOutside);
 })
 
 onUnmounted(() => {
-	document.removeEventListener('click', handleClickOutside)
+	document.removeEventListener('click', handleClickOutside);
 })
 </script>
 
 <style lang="scss" scoped>
 .header {
 	width: 100%;
-	background-color: var(--card-bg);
-	box-shadow: 0 2px 8px var(--shadow-color);
+	background-color: transparent;
 	position: sticky;
 	top: 0;
 	z-index: 100;
-	padding: $space-sm $space-md;
+	padding: 10px 16px;
 	
 	.header-container {
 		width: 100%;
@@ -125,33 +132,35 @@ onUnmounted(() => {
 		align-items: center;
 	}
 	
-	.logo {
-		font-size: $font-size-lg;
-		font-weight: $font-weight-bold;
-		color: var(--primary-color);
-		margin: 0;
+	.header-plugins {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 150px;
 	}
 	
 	.header-actions {
 		display: flex;
 		align-items: center;
-		gap: $space-md;
+		gap: 16px;
 	}
 	
 	.language-selector {
 		position: relative;
+		z-index: 1000; // 增加z-index确保下拉菜单在上层
 	}
 	
 	.language-button,
 	.theme-button,
 	.settings-button {
 		background: transparent;
-		color: var(--text-color);
-		border: 1px solid var(--border-color);
-		border-radius: $border-radius-md;
-		padding: $space-xs $space-sm;
+		color: var(--text-color, #333333);
+		border: 1px solid var(--border-color, #e0e0e0);
+		border-radius: 4px;
+		padding: 6px 12px;
 		cursor: pointer;
-		transition: $transition-base;
+		transition: all 0.2s ease;
+		min-width: 40px; // 确保有足够的点击区域
 		
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.05);
@@ -162,23 +171,24 @@ onUnmounted(() => {
 		position: absolute;
 		top: 100%;
 		right: 0;
-		margin-top: $space-xs;
+		margin-top: 4px;
 		min-width: 120px;
-		background-color: var(--dropdown-bg);
-		border-radius: $border-radius-md;
-		box-shadow: 0 2px 10px var(--shadow-color);
+		background-color: var(--dropdown-bg, #ffffff);
+		border-radius: 4px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 		overflow: hidden;
-		z-index: 10;
+		z-index: 1000; // 增加z-index确保在最上层
+		border: 1px solid var(--border-color, #e0e0e0);
 	}
 	
 	.dropdown-item {
 		display: block;
 		width: 100%;
-		padding: $space-xs $space-sm;
+		padding: 8px 12px;
 		text-align: left;
 		background: transparent;
 		border: none;
-		color: var(--text-color);
+		color: var(--text-color, #333333);
 		cursor: pointer;
 		
 		&:hover {
@@ -186,9 +196,13 @@ onUnmounted(() => {
 		}
 		
 		&.active {
-			background-color: var(--primary-color);
+			background-color: var(--primary-color, #007bff);
 			color: white;
 		}
+	}
+	
+	.language-dropdown {
+		display: block; // 强制显示
 	}
 	
 	.settings-button {

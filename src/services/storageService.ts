@@ -25,22 +25,105 @@ class StorageService {
 	 * 加载默认数据
 	 */
 	async loadDefaultData(): Promise<IAppData | null> {
-		try {
-			// 从静态文件加载默认数据
-			const response = await fetch('/static/default.json')
-			if (!response.ok) {
-				throw new Error(`HTTP error: ${response.status}`)
+		// 尝试不同的路径加载默认数据
+		const pathsToTry = [
+			'/static/default.json', 
+			'./static/default.json',
+			'static/default.json',
+			'../static/default.json',
+			window.location.origin + '/static/default.json'
+		];
+		
+		// 添加时间戳来避免缓存问题
+		const timestamp = new Date().getTime();
+		
+		for (const basePath of pathsToTry) {
+			const path = `${basePath}?_=${timestamp}`;
+			console.log(`尝试从路径加载默认数据: ${path}`);
+			
+			try {
+				const response = await fetch(path);
+				if (!response.ok) {
+					console.warn(`路径 ${path} 加载失败: HTTP错误 ${response.status}`);
+					continue;
+				}
+				
+				console.log(`成功从 ${path} 获取响应`);
+				const text = await response.text();
+				
+				if (!text || text.trim() === '') {
+					console.warn(`路径 ${path} 返回的数据为空`);
+					continue;
+				}
+				
+				try {
+					const defaultData = JSON.parse(text);
+					console.log('成功解析default.json数据:', {
+						engines: defaultData.engines?.length || 0,
+						shortcuts: defaultData.shortcuts?.length || 0,
+						defaultEngine: defaultData.defaultEngine
+					});
+					
+					// 保存默认数据到本地存储
+					this.saveData(defaultData);
+					console.log('默认数据已保存到本地存储');
+					return defaultData;
+				} catch (parseError) {
+					console.error(`解析JSON失败 (${path}):`, parseError);
+					continue;
+				}
+			} catch (error) {
+				console.warn(`尝试路径 ${path} 时出错:`, error);
 			}
-			const defaultData = await response.json()
-			
-			// 保存默认数据到本地存储
-			this.saveData(defaultData)
-			
-			return defaultData
-		} catch (error) {
-			console.error('Error loading default data:', error)
-			return null
 		}
+		
+		// 如果所有路径都失败，返回手动创建的默认数据
+		console.error('所有路径都无法加载默认数据，创建基本的默认数据');
+		
+		// 创建一个简单的默认数据集
+		const hardcodedDefault: IAppData = {
+			engines: [
+				{
+					id: "google",
+					name: { zh: "谷歌", en: "Google" },
+					url: "https://www.google.com/search?q=",
+					iconUrl: "https://www.google.com/favicon.ico"
+				},
+				{
+					id: "bing",
+					name: { zh: "必应", en: "Microsoft Bing" },
+					url: "https://www.bing.com/search?q=",
+					iconUrl: "https://www.bing.com/favicon.ico"
+				},
+				{
+					id: "baidu",
+					name: { zh: "百度", en: "Baidu" },
+					url: "https://www.baidu.com/s?wd=",
+					iconUrl: "https://www.baidu.com/favicon.ico"
+				}
+			],
+			shortcuts: [
+				{
+					id: "github",
+					name: { zh: "GitHub", en: "GitHub" },
+					url: "https://github.com",
+					iconUrl: "https://github.com/favicon.ico"
+				},
+				{
+					id: "youtube",
+					name: { zh: "YouTube", en: "YouTube" },
+					url: "https://youtube.com",
+					iconUrl: "https://www.youtube.com/favicon.ico"
+				}
+			],
+			defaultEngine: "bing",
+			defaultLanguage: "zh",
+			languages: {}
+		};
+		
+		// 保存这个默认数据
+		this.saveData(hardcodedDefault);
+		return hardcodedDefault;
 	}
 	
 	/**

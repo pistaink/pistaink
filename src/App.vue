@@ -1,9 +1,12 @@
 <template>
 	<div class="app-container">
-		<Header />
+		<Header>
+			<template #plugins>
+				<PluginRegistry />
+			</template>
+		</Header>
 		<main class="main-content">
 			<SearchBox />
-			<DrawingCanvas />
 			<ShortcutGrid />
 		</main>
 	</div>
@@ -15,10 +18,17 @@ import { useDataStore } from '@/stores/dataStore'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { useI18nStore } from '@/stores/i18nStore'
 import { useBackgroundService } from '@/services/backgroundService'
+import { pluginManager } from '@/plugins/core/plugin-system'
 import Header from '@/components/layout/Header.vue'
 import SearchBox from '@/components/search/SearchBox.vue'
 import ShortcutGrid from '@/components/shortcuts/ShortcutGrid.vue'
-import DrawingCanvas from '@/components/drawing/DrawingCanvas.vue'
+import PluginRegistry from '@/plugins/core/PluginRegistry.vue'
+
+// 导入插件
+import DrawingPlugin from '@/plugins/drawing'
+import ScreenshotPlugin from '@/plugins/screenshot'
+import ColorPickerPlugin from '@/plugins/color-picker'
+import MemoPlugin from '@/plugins/memo'
 
 // 获取数据
 const dataStore = useDataStore()
@@ -28,14 +38,83 @@ const backgroundService = useBackgroundService()
 
 // 初始化数据和设置
 onMounted(async () => {
-	// 加载数据
-	await dataStore.loadData()
+	console.log('App component mounted');
+	
+	// 清除本地存储中可能已损坏的数据
+	console.log('清除本地存储...');
+	localStorage.removeItem('pistaink_app_data');
+	console.log('本地存储已清除');
+	
+	// 先加载数据确保搜索引擎和快捷方式可用
+	console.log('正在加载应用数据...');
+	await dataStore.loadData();
+	console.log('应用数据加载完成');
+	
+	// 注册插件 - 先于其他操作确保插件加载
+	console.log('Registering plugins...');
+	pluginManager.registerPlugin(DrawingPlugin);
+	pluginManager.registerPlugin(ScreenshotPlugin);
+	pluginManager.registerPlugin(ColorPickerPlugin);
+	pluginManager.registerPlugin(MemoPlugin);
+	console.log('Plugins registered:', pluginManager.getAllPlugins().length);
+	
 	// 初始化i18n
-	await i18nStore.initI18n()
+	await i18nStore.initI18n();
 	// 加载设置
-	await settingsStore.loadSettings()
+	await settingsStore.loadSettings();
 	// 应用背景
-	backgroundService.applyBackground()
+	backgroundService.applyBackground();
+	
+	// 检查数据是否正确加载，如果没有，重新尝试
+	if (dataStore.engines.length === 0 || dataStore.shortcuts.length === 0) {
+		console.log('搜索引擎或快捷方式为空，尝试重新加载数据...');
+		await dataStore.loadData();
+		
+		// 如果仍然为空，手动设置一些数据
+		if (dataStore.engines.length === 0) {
+			console.log('仍然无法加载搜索引擎，使用硬编码数据');
+			const engines = [
+				{
+					id: "google",
+					name: { zh: "谷歌", en: "Google" },
+					url: "https://www.google.com/search?q="
+				},
+				{
+					id: "bing", 
+					name: { zh: "必应", en: "Microsoft Bing" },
+					url: "https://www.bing.com/search?q="
+				}
+			];
+			
+			// 添加引擎
+			for (const engine of engines) {
+				await dataStore.addEngine(engine);
+			}
+			
+			// 设置默认引擎
+			await dataStore.setDefaultEngine('bing');
+		}
+		
+		// 如果快捷方式为空，添加一些默认快捷方式
+		if (dataStore.shortcuts.length === 0) {
+			console.log('仍然无法加载快捷方式，使用硬编码数据');
+			const shortcuts = [
+				{
+					name: { zh: "GitHub", en: "GitHub" },
+					url: "https://github.com"
+				},
+				{
+					name: { zh: "YouTube", en: "YouTube" },
+					url: "https://youtube.com"
+				}
+			];
+			
+			// 添加快捷方式
+			for (const shortcut of shortcuts) {
+				await dataStore.addShortcut(shortcut);
+			}
+		}
+	}
 	
 	// 监听主题变化
 	const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
