@@ -3,18 +3,20 @@
 		<div class="search-container">
 			<!-- 搜索引擎选择器 -->
 			<div class="engine-selector">
-				<button class="engine-button" @click="toggleEngineDropdown">
+				<button id="engineButton" class="engine-button" @click="handleEngineButtonClick">
 					<img :src="currentEngineIcon" :alt="currentEngineName" class="engine-icon" />
 				</button>
 				
-				<div v-if="isEngineDropdownOpen" class="engine-dropdown">
+				<!-- 下拉菜单始终存在于DOM中，但默认隐藏 -->
+				<div id="engineDropdown" style="display: none; position: fixed; z-index: 99999; background: white; border: 1px solid #ddd; width: 350px; padding: 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); margin-top: 4px;">
 					<div class="engine-grid">
 						<button 
 							v-for="engine in engines" 
 							:key="engine.id" 
 							class="engine-item"
 							:class="{ active: engine.id === currentEngineId }"
-							@click="selectEngine(engine.id)"
+							@click="selectEngine(engine.id, $event)"
+							style="display: flex; flex-direction: column; align-items: center; padding: 8px;"
 						>
 							<img :src="getEngineIcon(engine)" :alt="getEngineName(engine)" class="engine-icon" />
 							<span class="engine-name">{{ getEngineName(engine) }}</span>
@@ -44,7 +46,6 @@
 		</div>
 		
 		<!-- 添加搜索引擎模态框 -->
-		<!-- 简化版本，实际项目中可以使用更复杂的组件 -->
 		<div v-if="isAddEngineModalOpen" class="modal">
 			<div class="modal-backdrop" @click="closeAddEngineModal"></div>
 			<div class="modal-content">
@@ -121,7 +122,6 @@ const currentEngineIcon = computed(() => {
 
 // 状态
 const searchQuery = ref('')
-const isEngineDropdownOpen = ref(false)
 const isAddEngineModalOpen = ref(false)
 const newEngine = ref<{
 	name: ILocalizedString;
@@ -131,18 +131,43 @@ const newEngine = ref<{
 	url: ''
 })
 
-// 选择搜索引擎
-function selectEngine(id: string) {
-	console.log('选择搜索引擎:', id);
-	dataStore.setDefaultEngine(id)
-	isEngineDropdownOpen.value = false
+// 直接处理下拉菜单显示隐藏
+function handleEngineButtonClick(event: MouseEvent) {
+	event.stopPropagation();
+	const dropdown = document.getElementById('engineDropdown');
+	const button = document.getElementById('engineButton');
+	
+	if (dropdown && button) {
+		// 切换下拉菜单显示状态
+		const isVisible = dropdown.style.display === 'block';
+		
+		if (!isVisible) {
+			// 获取按钮位置
+			const rect = button.getBoundingClientRect();
+			// 设置下拉菜单位置
+			dropdown.style.top = (rect.bottom + 4) + 'px';
+			dropdown.style.left = rect.left + 'px';
+			dropdown.style.display = 'block';
+			console.log('显示下拉菜单，位置:', rect.left, rect.bottom);
+		} else {
+			dropdown.style.display = 'none';
+		}
+		
+		console.log('切换引擎下拉菜单:', isVisible ? '隐藏' : '显示');
+	}
 }
 
-// 切换搜索引擎下拉菜单
-function toggleEngineDropdown(event: MouseEvent) {
-	event.stopPropagation(); // 阻止事件冒泡
-	console.log('切换搜索引擎下拉菜单');
-	isEngineDropdownOpen.value = !isEngineDropdownOpen.value
+// 选择搜索引擎
+function selectEngine(id: string, event: MouseEvent) {
+	event.stopPropagation();
+	console.log('选择搜索引擎:', id);
+	dataStore.setDefaultEngine(id);
+	
+	// 隐藏下拉菜单
+	const dropdown = document.getElementById('engineDropdown');
+	if (dropdown) {
+		dropdown.style.display = 'none';
+	}
 }
 
 // 获取搜索引擎名称
@@ -179,7 +204,12 @@ function search() {
 // 打开添加搜索引擎模态框
 function openAddEngineModal() {
 	isAddEngineModalOpen.value = true
-	isEngineDropdownOpen.value = false
+	
+	// 隐藏引擎下拉菜单
+	const dropdown = document.getElementById('engineDropdown');
+	if (dropdown) {
+		dropdown.style.display = 'none';
+	}
 	
 	// 重置表单
 	newEngine.value = {
@@ -226,11 +256,17 @@ async function saveNewEngine() {
 
 // 点击外部关闭下拉菜单
 function handleClickOutside(event: MouseEvent) {
-	const target = event.target as HTMLElement;
-	// 如果点击的不是引擎选择器内的元素，则关闭下拉菜单
-	if (isEngineDropdownOpen.value && !target.closest('.engine-selector')) {
-		console.log('关闭搜索引擎下拉菜单');
-		isEngineDropdownOpen.value = false;
+	const dropdown = document.getElementById('engineDropdown');
+	const button = document.getElementById('engineButton');
+	
+	// 如果下拉菜单存在且显示中，且点击的不是下拉菜单或按钮
+	if (dropdown && dropdown.style.display === 'block') {
+		if (event.target instanceof Node && 
+			!dropdown.contains(event.target as Node) && 
+			!button?.contains(event.target as Node)) {
+			console.log('关闭搜索引擎下拉菜单');
+			dropdown.style.display = 'none';
+		}
 	}
 }
 
@@ -238,6 +274,12 @@ function handleClickOutside(event: MouseEvent) {
 onMounted(() => {
 	console.log('SearchBox组件已挂载');
 	document.addEventListener('click', handleClickOutside);
+	
+	// 确保下拉菜单默认隐藏
+	const dropdown = document.getElementById('engineDropdown');
+	if (dropdown) {
+		dropdown.style.display = 'none';
+	}
 })
 
 onUnmounted(() => {
@@ -250,7 +292,7 @@ onUnmounted(() => {
 	width: 100%;
 	max-width: 700px;
 	margin: 2rem auto;
-	position: relative; // 添加相对定位
+	position: relative;
 }
 
 .search-container {
@@ -264,7 +306,7 @@ onUnmounted(() => {
 
 .engine-selector {
 	position: relative;
-	z-index: 100; // 增加z-index确保下拉菜单在上层
+	z-index: 1000 !important; /* 强制增加z-index */
 }
 
 .engine-button {
@@ -275,8 +317,8 @@ onUnmounted(() => {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 40px; // 确保有足够的点击区域
-	min-height: 40px; // 确保有足够的点击区域
+	min-width: 40px;
+	min-height: 40px;
 	
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.05);
@@ -287,7 +329,7 @@ onUnmounted(() => {
 	width: 24px;
 	height: 24px;
 	border-radius: 4px;
-	object-fit: contain; // 确保图标不被拉伸
+	object-fit: contain;
 }
 
 .engine-dropdown {
@@ -299,9 +341,10 @@ onUnmounted(() => {
 	border-radius: 8px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	padding: 12px;
-	z-index: 1000; // 增加z-index确保在最上层
-	margin-top: 4px; // 添加一点间距
+	z-index: 1001 !important; /* 强制增加z-index */
+	margin-top: 4px;
 	border: 1px solid var(--border-color, #e0e0e0);
+	display: block !important; /* 强制显示 */
 }
 
 .engine-grid {
@@ -332,8 +375,8 @@ onUnmounted(() => {
 	}
 	
 	.engine-name {
-		margin-top: $space-xs;
-		font-size: $font-size-sm;
+		margin-top: 4px;
+		font-size: 14px;
 		text-align: center;
 		white-space: nowrap;
 		overflow: hidden;
@@ -347,10 +390,10 @@ onUnmounted(() => {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: $space-sm;
+	padding: 8px;
 	background: transparent;
-	border: 1px dashed var(--border-color);
-	border-radius: $border-radius-sm;
+	border: 1px dashed var(--border-color, #e0e0e0);
+	border-radius: 4px;
 	cursor: pointer;
 	
 	&:hover {
@@ -364,8 +407,8 @@ onUnmounted(() => {
 	}
 	
 	.add-text {
-		margin-top: $space-xs;
-		font-size: $font-size-sm;
+		margin-top: 4px;
+		font-size: 14px;
 		text-align: center;
 	}
 }
@@ -379,8 +422,8 @@ onUnmounted(() => {
 .search-input {
 	flex: 1;
 	border: none;
-	padding: $space-md;
-	font-size: $font-size-base;
+	padding: 16px;
+	font-size: 16px;
 	
 	&:focus {
 		outline: none;
@@ -389,22 +432,29 @@ onUnmounted(() => {
 }
 
 .search-button {
-	background-color: var(--primary-color);
+	background-color: var(--primary-color, #3498db);
 	color: white;
 	border: none;
-	padding: $space-md;
-	font-size: $font-size-base;
+	padding: 16px;
+	font-size: 16px;
 	cursor: pointer;
 	
 	&:hover {
-		background-color: var(--primary-color-dark);
+		background-color: var(--primary-color-dark, #2980b9);
 	}
 }
 
 /* 模态框样式 */
 .modal {
-	position: relative;
-	z-index: 100;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
 }
 
 .modal-backdrop {
@@ -414,25 +464,24 @@ onUnmounted(() => {
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 100;
+	z-index: 9998;
 }
 
 .modal-content {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: var(--card-bg);
-	border-radius: $border-radius-lg;
-	box-shadow: 0 4px 20px var(--shadow-color);
+	position: relative;
+	background-color: var(--card-bg, #ffffff);
+	border-radius: 12px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 	width: 90%;
 	max-width: 500px;
-	z-index: 101;
+	z-index: 10000;
+	display: flex;
+	flex-direction: column;
 }
 
 .modal-header {
-	padding: $space-md;
-	border-bottom: 1px solid var(--border-color);
+	padding: 16px;
+	border-bottom: 1px solid var(--border-color, #e0e0e0);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -446,60 +495,60 @@ onUnmounted(() => {
 		border: none;
 		font-size: 24px;
 		cursor: pointer;
-		color: var(--text-color-secondary);
+		color: var(--text-color-secondary, #666666);
 		
 		&:hover {
-			color: var(--text-color);
+			color: var(--text-color, #333333);
 		}
 	}
 }
 
 .modal-body {
-	padding: $space-md;
+	padding: 16px;
 }
 
 .form-group {
-	margin-bottom: $space-md;
+	margin-bottom: 16px;
 	
 	label {
 		display: block;
-		margin-bottom: $space-xs;
-		font-weight: $font-weight-bold;
+		margin-bottom: 4px;
+		font-weight: bold;
 	}
 	
 	input {
 		width: 100%;
-		padding: $space-sm;
-		border: 1px solid var(--border-color);
-		border-radius: $border-radius-sm;
+		padding: 8px;
+		border: 1px solid var(--border-color, #e0e0e0);
+		border-radius: 4px;
 		
 		&:focus {
-			border-color: var(--primary-color);
+			border-color: var(--primary-color, #3498db);
 			outline: none;
 		}
 	}
 	
 	small {
 		display: block;
-		margin-top: $space-xs;
-		color: var(--text-color-secondary);
-		font-size: $font-size-sm;
+		margin-top: 4px;
+		color: var(--text-color-secondary, #666666);
+		font-size: 14px;
 	}
 }
 
 .modal-footer {
-	padding: $space-md;
-	border-top: 1px solid var(--border-color);
+	padding: 16px;
+	border-top: 1px solid var(--border-color, #e0e0e0);
 	display: flex;
 	justify-content: flex-end;
-	gap: $space-sm;
+	gap: 8px;
 	
 	.cancel-button {
 		background-color: transparent;
-		border: 1px solid var(--border-color);
-		color: var(--text-color);
-		padding: $space-xs $space-md;
-		border-radius: $border-radius-sm;
+		border: 1px solid var(--border-color, #e0e0e0);
+		color: var(--text-color, #333333);
+		padding: 4px 16px;
+		border-radius: 4px;
 		cursor: pointer;
 		
 		&:hover {
@@ -508,23 +557,23 @@ onUnmounted(() => {
 	}
 	
 	.save-button {
-		background-color: var(--primary-color);
+		background-color: var(--primary-color, #3498db);
 		color: white;
 		border: none;
-		padding: $space-xs $space-md;
-		border-radius: $border-radius-sm;
+		padding: 4px 16px;
+		border-radius: 4px;
 		cursor: pointer;
 		
 		&:hover {
-			background-color: var(--primary-color-dark);
+			background-color: var(--primary-color-dark, #2980b9);
 		}
 	}
 }
 
 /* 响应式样式 */
-@include responsive(sm) {
+@media (max-width: 576px) {
 	.search-button {
-		padding: $space-sm $space-md;
+		padding: 8px 16px;
 	}
 	
 	.engine-grid {

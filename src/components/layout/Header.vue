@@ -9,20 +9,23 @@
 			<div class="header-actions">
 				<!-- 语言切换 -->
 				<div class="language-selector">
-					<button @click="toggleLanguageDropdown" class="language-button">
+					<button id="languageButton" @click="handleLanguageButtonClick" class="language-button">
 						{{ currentLanguage.toUpperCase() }}
 					</button>
 					
-					<div v-if="isLanguageDropdownOpen" class="dropdown-menu language-dropdown">
-						<button 
+					<div 
+						id="languageDropdown"
+						class="language-dropdown-menu"
+						style="display: none"
+					>
+						<div 
 							v-for="lang in availableLanguages" 
 							:key="lang" 
-							@click="changeLanguage(lang)"
-							:class="{ active: lang === currentLanguage }"
-							class="dropdown-item"
+							@click="changeLanguage(lang, $event)"
+							:class="['dropdown-item', { active: lang === currentLanguage }]"
 						>
 							{{ lang.toUpperCase() }}
-						</button>
+						</div>
 					</div>
 				</div>
 				
@@ -60,14 +63,28 @@ const availableLanguages = computed(() => i18nStore.availableLanguages)
 const themeMode = computed(() => settingsStore.themeMode)
 
 // 状态
-const isLanguageDropdownOpen = ref(false)
 const isSettingsOpen = ref(false)
 
-// 切换语言下拉菜单
-function toggleLanguageDropdown(event: MouseEvent) {
-	event.stopPropagation(); // 阻止事件冒泡
-	console.log('切换语言下拉菜单');
-	isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value;
+// 直接处理语言下拉菜单显示/隐藏
+function handleLanguageButtonClick(event: MouseEvent) {
+	event.stopPropagation();
+	event.preventDefault();
+	
+	const dropdown = document.getElementById('languageDropdown');
+	
+	if (dropdown) {
+		// 切换下拉菜单显示状态
+		const isVisible = dropdown.style.display === 'block';
+		
+		if (!isVisible) {
+			// 设置下拉菜单位置
+			dropdown.style.display = 'block';
+			dropdown.style.visibility = 'visible';
+			dropdown.style.opacity = '1';
+		} else {
+			dropdown.style.display = 'none';
+		}
+	}
 }
 
 // 切换主题
@@ -79,10 +96,16 @@ function toggleTheme() {
 }
 
 // 切换语言
-function changeLanguage(lang: string) {
+function changeLanguage(lang: string, event: MouseEvent) {
+	event.stopPropagation();
 	console.log('切换语言至:', lang);
-	i18nStore.setLanguage(lang)
-	isLanguageDropdownOpen.value = false
+	i18nStore.setLanguage(lang);
+	
+	// 隐藏下拉菜单
+	const dropdown = document.getElementById('languageDropdown');
+	if (dropdown) {
+		dropdown.style.display = 'none';
+	}
 }
 
 // 打开设置面板
@@ -96,10 +119,17 @@ function openSettings() {
 
 // 关闭下拉菜单的点击外部事件监听
 function handleClickOutside(event: MouseEvent) {
-	const target = event.target as HTMLElement;
-	if (isLanguageDropdownOpen.value && !target.closest('.language-selector')) {
-		console.log('关闭语言下拉菜单');
-		isLanguageDropdownOpen.value = false;
+	const dropdown = document.getElementById('languageDropdown');
+	const button = document.getElementById('languageButton');
+	
+	// 如果下拉菜单存在且显示中，且点击的不是下拉菜单或按钮
+	if (dropdown && dropdown.style.display === 'block') {
+		if (event.target instanceof Node && 
+			!dropdown.contains(event.target as Node) && 
+			!button?.contains(event.target as Node)) {
+			console.log('关闭语言下拉菜单');
+			dropdown.style.display = 'none';
+		}
 	}
 }
 
@@ -107,6 +137,12 @@ function handleClickOutside(event: MouseEvent) {
 onMounted(() => {
 	console.log('Header组件已挂载');
 	document.addEventListener('click', handleClickOutside);
+	
+	// 移除自动显示语言下拉菜单的测试代码
+	const dropdown = document.getElementById('languageDropdown');
+	if (dropdown) {
+		dropdown.style.display = 'none';
+	}
 })
 
 onUnmounted(() => {
@@ -120,7 +156,7 @@ onUnmounted(() => {
 	background-color: transparent;
 	position: sticky;
 	top: 0;
-	z-index: 100;
+	z-index: 999;
 	padding: 10px 16px;
 	
 	.header-container {
@@ -147,49 +183,42 @@ onUnmounted(() => {
 	
 	.language-selector {
 		position: relative;
-		z-index: 1000; // 增加z-index确保下拉菜单在上层
+		z-index: 1500 !important; /* 增加z-index确保下拉菜单在上层 */
 	}
 	
-	.language-button,
-	.theme-button,
-	.settings-button {
-		background: transparent;
-		color: var(--text-color, #333333);
-		border: 1px solid var(--border-color, #e0e0e0);
+	.language-button {
+		font-weight: bold;
+		padding: 8px 12px;
+		border: 2px solid #3498db;
 		border-radius: 4px;
-		padding: 6px 12px;
+		background-color: #f8f9fa;
 		cursor: pointer;
-		transition: all 0.2s ease;
-		min-width: 40px; // 确保有足够的点击区域
-		
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
 	}
 	
-	.dropdown-menu {
+	.language-dropdown-menu {
 		position: absolute;
 		top: 100%;
 		right: 0;
-		margin-top: 4px;
-		min-width: 120px;
-		background-color: var(--dropdown-bg, #ffffff);
+		z-index: 99999;
+		background: white;
+		border: 1px solid #ddd;
+		min-width: 150px;
+		padding: 8px;
 		border-radius: 4px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-		overflow: hidden;
-		z-index: 1000; // 增加z-index确保在最上层
-		border: 1px solid var(--border-color, #e0e0e0);
+		box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+		margin-top: 4px;
 	}
 	
 	.dropdown-item {
 		display: block;
 		width: 100%;
-		padding: 8px 12px;
 		text-align: left;
-		background: transparent;
+		padding: 8px 12px;
+		margin-bottom: 4px;
 		border: none;
-		color: var(--text-color, #333333);
 		cursor: pointer;
+		border-radius: 4px;
+		background-color: transparent;
 		
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.05);
@@ -201,27 +230,39 @@ onUnmounted(() => {
 		}
 	}
 	
-	.language-dropdown {
-		display: block; // 强制显示
+	.theme-button,
+	.settings-button {
+		background: transparent;
+		color: var(--text-color, #333333);
+		border: 1px solid var(--border-color, #e0e0e0);
+		border-radius: 4px;
+		padding: 6px 12px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		min-width: 40px;
+		
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.05);
+		}
 	}
 	
 	.settings-button {
 		display: flex;
 		align-items: center;
-		gap: $space-xs;
+		gap: 4px;
 	}
 }
 
 /* 响应式样式 */
-@include responsive(md) {
+@media (max-width: 768px) {
 	.header {
 		.logo {
-			font-size: $font-size-xl;
+			font-size: 24px;
 		}
 	}
 }
 
-@include responsive(sm) {
+@media (max-width: 576px) {
 	.header {
 		.settings-button {
 			span {
@@ -230,7 +271,7 @@ onUnmounted(() => {
 		}
 		
 		.header-actions {
-			gap: $space-sm;
+			gap: 8px;
 		}
 	}
 }

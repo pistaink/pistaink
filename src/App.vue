@@ -9,11 +9,96 @@
 			<SearchBox />
 			<ShortcutGrid />
 		</main>
+
+		<!-- 设置面板 -->
+		<div v-if="isSettingsOpen" class="settings-modal" style="display: flex;">
+			<div class="modal-backdrop" @click="closeSettings"></div>
+			<div class="settings-content">
+				<div class="settings-header">
+					<h2>{{ i18nStore.t('settings') }}</h2>
+					<button class="close-button" @click="closeSettings">&times;</button>
+				</div>
+				<div class="settings-body">
+					<div class="settings-sidebar">
+						<div 
+							class="sidebar-item" 
+							:class="{ active: currentSettingsTab === 'general' }"
+							@click="currentSettingsTab = 'general'"
+						>{{ i18nStore.t('general') }}</div>
+						<div 
+							class="sidebar-item" 
+							:class="{ active: currentSettingsTab === 'search' }"
+							@click="currentSettingsTab = 'search'"
+						>{{ i18nStore.t('search') }}</div>
+						<div 
+							class="sidebar-item" 
+							:class="{ active: currentSettingsTab === 'import' }"
+							@click="currentSettingsTab = 'import'"
+						>{{ i18nStore.t('import_export') }}</div>
+						<div 
+							class="sidebar-item" 
+							:class="{ active: currentSettingsTab === 'language' }"
+							@click="currentSettingsTab = 'language'"
+						>{{ i18nStore.t('language') }}</div>
+						<div 
+							class="sidebar-item" 
+							:class="{ active: currentSettingsTab === 'about' }"
+							@click="currentSettingsTab = 'about'"
+						>{{ i18nStore.t('about') }}</div>
+					</div>
+					<div class="settings-panel">
+						<!-- 不同设置页面的内容 -->
+						<div v-if="currentSettingsTab === 'general'" class="settings-tab-content">
+							<h3>{{ i18nStore.t('general_settings') }}</h3>
+							<div class="form-group">
+								<label>{{ i18nStore.t('theme') }}</label>
+								<div class="theme-options">
+									<button 
+										@click="settingsStore.setThemeMode('light')"
+										:class="{ active: settingsStore.themeMode === 'light' }"
+									>
+										{{ i18nStore.t('light') }}
+									</button>
+									<button 
+										@click="settingsStore.setThemeMode('dark')"
+										:class="{ active: settingsStore.themeMode === 'dark' }"
+									>
+										{{ i18nStore.t('dark') }}
+									</button>
+									<button 
+										@click="settingsStore.setThemeMode('auto')"
+										:class="{ active: settingsStore.themeMode === 'auto' }"
+									>
+										{{ i18nStore.t('auto') }}
+									</button>
+								</div>
+							</div>
+						</div>
+						<div v-if="currentSettingsTab === 'search'" class="settings-tab-content">
+							<h3>{{ i18nStore.t('search_settings') }}</h3>
+							<!-- 搜索引擎设置 -->
+						</div>
+						<div v-if="currentSettingsTab === 'import'" class="settings-tab-content">
+							<h3>{{ i18nStore.t('import_export') }}</h3>
+							<!-- 导入导出设置 -->
+						</div>
+						<div v-if="currentSettingsTab === 'language'" class="settings-tab-content">
+							<h3>{{ i18nStore.t('language_settings') }}</h3>
+							<!-- 语言设置 -->
+						</div>
+						<div v-if="currentSettingsTab === 'about'" class="settings-tab-content">
+							<h3>{{ i18nStore.t('about') }}</h3>
+							<p>pistaink.com - v1.0.0</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useDataStore } from '@/stores/dataStore'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { useI18nStore } from '@/stores/i18nStore'
@@ -35,6 +120,20 @@ const dataStore = useDataStore()
 const settingsStore = useSettingsStore()
 const i18nStore = useI18nStore()
 const backgroundService = useBackgroundService()
+
+// 设置面板状态
+const isSettingsOpen = ref(false)
+const currentSettingsTab = ref('general')
+
+// 打开设置面板
+function openSettings() {
+	isSettingsOpen.value = true
+}
+
+// 关闭设置面板
+function closeSettings() {
+	isSettingsOpen.value = false
+}
 
 // 初始化数据和设置
 onMounted(async () => {
@@ -120,12 +219,18 @@ onMounted(async () => {
 	const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 	updateThemeBasedOnPreference(darkModeMediaQuery)
 	darkModeMediaQuery.addEventListener('change', updateThemeBasedOnPreference)
+
+	// 添加监听设置面板打开事件
+	window.addEventListener('openSettings', openSettings)
 })
 
 // 清理监听器
 onBeforeUnmount(() => {
 	const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 	darkModeMediaQuery.removeEventListener('change', updateThemeBasedOnPreference)
+
+	// 移除设置面板事件监听
+	window.removeEventListener('openSettings', openSettings)
 })
 
 // 根据系统偏好设置主题
@@ -157,5 +262,142 @@ function updateThemeBasedOnPreference(e: MediaQueryListEvent | MediaQueryList) {
 	align-items: center;
 	padding: 2rem 0;
 	gap: 2rem;
+}
+
+// 设置面板样式
+.settings-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.settings-content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 90%;
+	max-width: 900px;
+	max-height: 90vh;
+	background-color: var(--card-bg, #ffffff);
+	border-radius: 12px;
+	box-shadow: 0 4px 20px var(--shadow-color, rgba(0, 0, 0, 0.15));
+	z-index: 2001;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.settings-header {
+	padding: 16px;
+	border-bottom: 1px solid var(--border-color, #e0e0e0);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	
+	h2 {
+		margin: 0;
+		font-size: 18px;
+	}
+	
+	.close-button {
+		background: transparent;
+		border: none;
+		font-size: 24px;
+		cursor: pointer;
+		color: var(--text-color-secondary, #6c757d);
+		
+		&:hover {
+			color: var(--text-color, #212529);
+		}
+	}
+}
+
+.settings-body {
+	display: flex;
+	height: 500px;
+	overflow: hidden;
+}
+
+.settings-sidebar {
+	width: 200px;
+	border-right: 1px solid var(--border-color, #e0e0e0);
+	padding: 16px 0;
+	
+	.sidebar-item {
+		padding: 12px 16px;
+		cursor: pointer;
+		transition: background-color 0.2s;
+		
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.05);
+		}
+		
+		&.active {
+			background-color: var(--primary-color, #3498db);
+			color: white;
+		}
+	}
+}
+
+.settings-panel {
+	flex: 1;
+	padding: 16px;
+	overflow-y: auto;
+}
+
+.settings-tab-content {
+	h3 {
+		margin-top: 0;
+		margin-bottom: 16px;
+	}
+}
+
+.form-group {
+	margin-bottom: 16px;
+	
+	label {
+		display: block;
+		margin-bottom: 8px;
+		font-weight: bold;
+	}
+}
+
+.theme-options {
+	display: flex;
+	gap: 8px;
+	
+	button {
+		padding: 8px 16px;
+		border: 1px solid var(--border-color, #e0e0e0);
+		background-color: transparent;
+		border-radius: 4px;
+		cursor: pointer;
+		
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.05);
+		}
+		
+		&.active {
+			background-color: var(--primary-color, #3498db);
+			color: white;
+			border-color: var(--primary-color, #3498db);
+		}
+	}
 }
 </style> 

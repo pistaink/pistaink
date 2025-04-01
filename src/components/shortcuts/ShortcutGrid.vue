@@ -387,7 +387,11 @@ async function deleteShortcut() {
 	background-color: var(--card-bg);
 	border-radius: $border-radius-lg;
 	box-shadow: 0 4px 20px var(--shadow-color);
-	z-index: 1;
+	z-index: 1001;
+	transform: translate(-50%, -50%);
+	position: fixed;
+	top: 50%;
+	left: 50%;
 }
 
 .modal-header {
