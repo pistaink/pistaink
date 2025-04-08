@@ -98,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import { useDataStore } from '@/stores/dataStore'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { useI18nStore } from '@/stores/i18nStore'
@@ -222,6 +222,18 @@ onMounted(async () => {
 
 	// 添加监听设置面板打开事件
 	window.addEventListener('openSettings', openSettings)
+
+	// 1. 添加主题切换的响应式监听
+	watch(
+		() => settingsStore.themeMode,
+		(newMode) => {
+			document.documentElement.setAttribute('data-theme', newMode);
+			if (newMode === 'auto') {
+				updateThemeBasedOnPreference(window.matchMedia('(prefers-color-scheme: dark)'));
+			}
+		},
+		{ immediate: true }
+	);
 })
 
 // 清理监听器
@@ -235,169 +247,164 @@ onBeforeUnmount(() => {
 
 // 根据系统偏好设置主题
 function updateThemeBasedOnPreference(e: MediaQueryListEvent | MediaQueryList) {
-	const isDarkMode = e.matches
-	// 如果用户没有明确设置主题，则跟随系统
-	if (!localStorage.getItem('pistaink_settings')) {
-		settingsStore.setThemeMode(isDarkMode ? 'dark' : 'light')
+	const isDarkMode = e.matches;
+	if (settingsStore.themeMode === 'auto') {
+		document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
 	}
 }
 </script>
 
-<style lang="scss">
-.app-container {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 1rem;
-	box-sizing: border-box;
+<style>
+/* 1. 添加全局主题变量 */
+:root {
+	/* Light theme variables */
+	--bg-color: #ffffff;
+	--text-color: #333333;
+	--border-color: #e5e5e5;
+	--hover-color: #f5f5f5;
+	--primary-color: #4a90e2;
+	--modal-backdrop: rgba(0, 0, 0, 0.5);
 }
 
-.main-content {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 2rem 0;
-	gap: 2rem;
+[data-theme="dark"] {
+	/* Dark theme variables */
+	--bg-color: #1a1a1a;
+	--text-color: #ffffff;
+	--border-color: #333333;
+	--hover-color: #2a2a2a;
+	--primary-color: #64b5f6;
+	--modal-backdrop: rgba(0, 0, 0, 0.7);
 }
 
-// 设置面板样式
+/* 2. 添加设置面板样式 */
 .settings-modal {
 	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 2000;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 }
 
 .modal-backdrop {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	background-color: var(--modal-backdrop);
 }
 
 .settings-content {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 90%;
-	max-width: 900px;
-	max-height: 90vh;
-	background-color: var(--card-bg, #ffffff);
-	border-radius: 12px;
-	box-shadow: 0 4px 20px var(--shadow-color, rgba(0, 0, 0, 0.15));
-	z-index: 2001;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
+	position: relative;
+	width: 80%;
+	max-width: 1000px;
+	height: 80vh;
+	background-color: var(--bg-color);
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	z-index: 1001;
 }
 
 .settings-header {
-	padding: 16px;
-	border-bottom: 1px solid var(--border-color, #e0e0e0);
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
-	
-	h2 {
-		margin: 0;
-		font-size: 18px;
-	}
-	
-	.close-button {
-		background: transparent;
-		border: none;
-		font-size: 24px;
-		cursor: pointer;
-		color: var(--text-color-secondary, #6c757d);
-		
-		&:hover {
-			color: var(--text-color, #212529);
-		}
-	}
+	align-items: center;
+	padding: 16px 24px;
+	border-bottom: 1px solid var(--border-color);
 }
 
 .settings-body {
 	display: flex;
-	height: 500px;
-	overflow: hidden;
+	height: calc(100% - 60px);
 }
 
 .settings-sidebar {
 	width: 200px;
-	border-right: 1px solid var(--border-color, #e0e0e0);
-	padding: 16px 0;
-	
-	.sidebar-item {
-		padding: 12px 16px;
-		cursor: pointer;
-		transition: background-color 0.2s;
-		
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
-		
-		&.active {
-			background-color: var(--primary-color, #3498db);
-			color: white;
-		}
-	}
+	padding: 16px;
+	border-right: 1px solid var(--border-color);
+}
+
+.sidebar-item {
+	padding: 12px 16px;
+	margin-bottom: 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	color: var(--text-color);
+	transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+	background-color: var(--hover-color);
+}
+
+.sidebar-item.active {
+	background-color: var(--primary-color);
+	color: white;
 }
 
 .settings-panel {
 	flex: 1;
-	padding: 16px;
+	padding: 24px;
 	overflow-y: auto;
 }
 
-.settings-tab-content {
-	h3 {
-		margin-top: 0;
-		margin-bottom: 16px;
-	}
+.close-button {
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	padding: 4px 8px;
+	color: var(--text-color);
 }
 
-.form-group {
-	margin-bottom: 16px;
-	
-	label {
-		display: block;
-		margin-bottom: 8px;
-		font-weight: bold;
-	}
+.settings-tab-content {
+	color: var(--text-color);
 }
 
 .theme-options {
 	display: flex;
 	gap: 8px;
-	
-	button {
-		padding: 8px 16px;
-		border: 1px solid var(--border-color, #e0e0e0);
-		background-color: transparent;
-		border-radius: 4px;
-		cursor: pointer;
-		
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
-		
-		&.active {
-			background-color: var(--primary-color, #3498db);
-			color: white;
-			border-color: var(--primary-color, #3498db);
-		}
-	}
+	margin-top: 8px;
 }
-</style> 
+
+.theme-options button {
+	padding: 8px 16px;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	background: var(--bg-color);
+	color: var(--text-color);
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+.theme-options button:hover {
+	background: var(--hover-color);
+}
+
+.theme-options button.active {
+	background: var(--primary-color);
+	color: white;
+	border-color: var(--primary-color);
+}
+
+/* 3. 添加全局样式 */
+.app-container {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	min-height: 100vh;
+}
+
+.form-group {
+	margin-bottom: 16px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--text-color);
+}
+</style>
