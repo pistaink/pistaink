@@ -8,7 +8,7 @@
 				</button>
 				
 				<!-- 下拉菜单始终存在于DOM中，但默认隐藏 -->
-				<div id="engineDropdown" style="display: none; position: fixed; z-index: 99999; background: white; border: 1px solid #ddd; width: 350px; padding: 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); margin-top: 4px;">
+				<div id="engineDropdown" style="display: none; position: fixed; z-index: 99999; background: var(--dropdown-bg); border: 1px solid var(--border-color); width: 350px; padding: 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); margin-top: 4px;">
 					<div class="engine-grid">
 						<button 
 							v-for="engine in engines" 
@@ -16,13 +16,13 @@
 							class="engine-item"
 							:class="{ active: engine.id === currentEngineId }"
 							@click="selectEngine(engine.id, $event)"
-							style="display: flex; flex-direction: column; align-items: center; padding: 8px;"
+							style="display: flex; flex-direction: column; align-items: center; padding: 8px; color: var(--text-color); background-color: var(--bg-color);"
 						>
 							<img :src="getEngineIcon(engine)" :alt="getEngineName(engine)" class="engine-icon" />
 							<span class="engine-name">{{ getEngineName(engine) }}</span>
 						</button>
 						
-						<button class="add-engine-button" @click="openAddEngineModal">
+						<button class="add-engine-button" @click="openAddEngineModal" style="color: var(--text-color); background-color: var(--bg-color);">
 							<span class="add-icon">+</span>
 							<span class="add-text">{{ t('add_engine') }}</span>
 						</button>
@@ -290,157 +290,137 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .search-box {
 	width: 100%;
-	max-width: 700px;
-	margin: 2rem auto;
-	position: relative;
-}
-
-.search-container {
-	display: flex;
-	align-items: center;
-	background-color: var(--card-bg, #ffffff);
-	border-radius: 8px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-}
-
-.engine-selector {
-	position: relative;
-	z-index: 1000 !important; /* 强制增加z-index */
-}
-
-.engine-button {
-	background: transparent;
-	border: none;
-	padding: 8px;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 40px;
-	min-height: 40px;
+	max-width: 600px;
+	margin: 20px auto;
 	
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.05);
-	}
-}
-
-.engine-icon {
-	width: 24px;
-	height: 24px;
-	border-radius: 4px;
-	object-fit: contain;
-}
-
-.engine-dropdown {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	min-width: 300px;
-	background-color: var(--card-bg, #ffffff);
-	border-radius: 8px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	padding: 12px;
-	z-index: 1001 !important; /* 强制增加z-index */
-	margin-top: 4px;
-	border: 1px solid var(--border-color, #e0e0e0);
-	display: block !important; /* 强制显示 */
-}
-
-.engine-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 8px;
-}
-
-.engine-item {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 8px;
-	background: transparent;
-	border: 1px solid transparent;
-	border-radius: 4px;
-	cursor: pointer;
-	
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.05);
-		border-color: var(--border-color, #e0e0e0);
+	.search-container {
+		display: flex;
+		border-radius: 24px;
+		overflow: hidden;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+		background-color: var(--bg-color);
+		border: 1px solid var(--border-color);
 	}
 	
-	&.active {
-		background-color: rgba(0, 0, 0, 0.1);
-		border-color: var(--primary-color, #007bff);
+	.engine-selector {
+		position: relative;
+	}
+	
+	.engine-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		border: none;
+		background-color: var(--bg-color);
+		cursor: pointer;
+		padding: 12px;
+		
+		&:hover {
+			background-color: var(--hover-color);
+		}
+	}
+	
+	.engine-icon {
+		width: 24px;
+		height: 24px;
+		object-fit: contain;
+	}
+	
+	.search-input-container {
+		display: flex;
+		flex: 1;
+	}
+	
+	.search-input {
+		flex: 1;
+		height: 48px;
+		border: none;
+		padding: 0 16px;
+		font-size: 16px;
+		background-color: var(--bg-color);
+		color: var(--text-color);
+		
+		&:focus {
+			outline: none;
+		}
+		
+		&::placeholder {
+			color: var(--secondary-text-color);
+		}
+	}
+	
+	.search-button {
+		height: 48px;
+		padding: 0 24px;
+		border: none;
+		background-color: var(--primary-color);
+		color: white;
+		font-weight: bold;
+		cursor: pointer;
+		
+		&:hover {
+			background-color: var(--primary-color-dark);
+		}
+	}
+	
+	.engine-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+	}
+	
+	.engine-item {
+		border: none;
+		background-color: var(--bg-color);
+		border-radius: 4px;
+		cursor: pointer;
+		
+		&:hover {
+			background-color: var(--hover-color);
+		}
+		
+		&.active {
+			background-color: var(--primary-color);
+			color: white;
+			
+			.engine-name {
+				color: white;
+			}
+		}
 	}
 	
 	.engine-name {
 		margin-top: 4px;
-		font-size: 14px;
-		text-align: center;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		max-width: 100%;
+		font-size: 12px;
+		color: var(--text-color);
 	}
-}
-
-.add-engine-button {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 8px;
-	background: transparent;
-	border: 1px dashed var(--border-color, #e0e0e0);
-	border-radius: 4px;
-	cursor: pointer;
 	
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.05);
+	.add-engine-button {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 8px;
+		border: 1px dashed var(--border-color);
+		border-radius: 4px;
+		background-color: var(--bg-color);
+		cursor: pointer;
+		
+		&:hover {
+			background-color: var(--hover-color);
+		}
 	}
 	
 	.add-icon {
 		font-size: 24px;
-		line-height: 24px;
-		font-weight: bold;
+		color: var(--text-color);
 	}
 	
 	.add-text {
 		margin-top: 4px;
-		font-size: 14px;
-		text-align: center;
-	}
-}
-
-.search-input-container {
-	flex: 1;
-	display: flex;
-	align-items: center;
-}
-
-.search-input {
-	flex: 1;
-	border: none;
-	padding: 16px;
-	font-size: 16px;
-	
-	&:focus {
-		outline: none;
-		box-shadow: none;
-	}
-}
-
-.search-button {
-	background-color: var(--primary-color, #3498db);
-	color: white;
-	border: none;
-	padding: 16px;
-	font-size: 16px;
-	cursor: pointer;
-	
-	&:hover {
-		background-color: var(--primary-color-dark, #2980b9);
+		font-size: 12px;
+		color: var(--text-color);
 	}
 }
 
@@ -449,58 +429,53 @@ onUnmounted(() => {
 	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2000;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	z-index: 9999;
+	align-items: center;
 }
 
 .modal-backdrop {
 	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 9998;
+	width: 100%;
+	height: 100%;
+	background-color: var(--modal-backdrop);
 }
 
 .modal-content {
 	position: relative;
-	background-color: var(--card-bg, #ffffff);
-	border-radius: 12px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 	width: 90%;
 	max-width: 500px;
-	z-index: 10000;
-	display: flex;
-	flex-direction: column;
+	background-color: var(--modal-bg);
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	z-index: 2001;
+	overflow: hidden;
 }
 
 .modal-header {
-	padding: 16px;
-	border-bottom: 1px solid var(--border-color, #e0e0e0);
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
-	
-	h3 {
-		margin: 0;
-	}
-	
-	.close-button {
-		background: transparent;
-		border: none;
-		font-size: 24px;
-		cursor: pointer;
-		color: var(--text-color-secondary, #666666);
-		
-		&:hover {
-			color: var(--text-color, #333333);
-		}
-	}
+	align-items: center;
+	padding: 16px;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+	margin: 0;
+	color: var(--text-color);
+}
+
+.close-button {
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: var(--text-color);
 }
 
 .modal-body {
@@ -509,75 +484,52 @@ onUnmounted(() => {
 
 .form-group {
 	margin-bottom: 16px;
-	
-	label {
-		display: block;
-		margin-bottom: 4px;
-		font-weight: bold;
-	}
-	
-	input {
-		width: 100%;
-		padding: 8px;
-		border: 1px solid var(--border-color, #e0e0e0);
-		border-radius: 4px;
-		
-		&:focus {
-			border-color: var(--primary-color, #3498db);
-			outline: none;
-		}
-	}
-	
-	small {
-		display: block;
-		margin-top: 4px;
-		color: var(--text-color-secondary, #666666);
-		font-size: 14px;
-	}
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--text-color);
+}
+
+.form-group input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	background-color: var(--bg-color);
+	color: var(--text-color);
+}
+
+.form-group small {
+	display: block;
+	margin-top: 4px;
+	color: var(--secondary-text-color);
 }
 
 .modal-footer {
-	padding: 16px;
-	border-top: 1px solid var(--border-color, #e0e0e0);
 	display: flex;
 	justify-content: flex-end;
+	padding: 16px;
+	border-top: 1px solid var(--border-color);
 	gap: 8px;
-	
-	.cancel-button {
-		background-color: transparent;
-		border: 1px solid var(--border-color, #e0e0e0);
-		color: var(--text-color, #333333);
-		padding: 4px 16px;
-		border-radius: 4px;
-		cursor: pointer;
-		
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
-	}
-	
-	.save-button {
-		background-color: var(--primary-color, #3498db);
-		color: white;
-		border: none;
-		padding: 4px 16px;
-		border-radius: 4px;
-		cursor: pointer;
-		
-		&:hover {
-			background-color: var(--primary-color-dark, #2980b9);
-		}
-	}
 }
 
-/* 响应式样式 */
-@media (max-width: 576px) {
-	.search-button {
-		padding: 8px 16px;
-	}
-	
-	.engine-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
+.cancel-button, .save-button {
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.cancel-button {
+	background-color: transparent;
+	border: 1px solid var(--border-color);
+	color: var(--text-color);
+}
+
+.save-button {
+	background-color: var(--primary-color);
+	border: none;
+	color: white;
 }
 </style> 

@@ -241,35 +241,35 @@ async function deleteShortcut() {
 	width: 100%;
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: $space-md;
+	padding: 16px;
 }
 
 .grid-title {
-	font-size: $font-size-lg;
-	margin-bottom: $space-md;
+	font-size: 18px;
+	margin-bottom: 16px;
 	color: var(--text-color);
 }
 
 .shortcuts-container {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax($shortcut-size, 1fr));
-	gap: $space-xl;
-	margin-top: $space-md;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 16px;
 }
 
 .shortcut-item {
 	position: relative;
-	width: $shortcut-size;
-	height: $shortcut-size;
-	background-color: var(--card-bg);
-	border-radius: $border-radius-md;
-	box-shadow: 0 2px 8px var(--shadow-color);
-	overflow: hidden;
-	transition: $transition-base;
+	background-color: var(--bg-color);
+	border-radius: 8px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: all 0.2s;
+	border: 1px solid var(--border-color);
 	
 	&:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 5px 15px var(--shadow-color);
+		transform: translateY(-4px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		
 		.edit-button {
 			opacity: 1;
@@ -281,172 +281,151 @@ async function deleteShortcut() {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
 	text-decoration: none;
-	color: var(--text-color);
+	width: 100%;
 }
 
 .shortcut-icon {
-	width: 40px;
-	height: 40px;
-	margin-bottom: $space-sm;
+	width: 48px;
+	height: 48px;
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	
 	img {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-		border-radius: $border-radius-sm;
 	}
 }
 
 .shortcut-name {
-	font-size: $font-size-sm;
-	font-weight: $font-weight-normal;
+	font-size: 14px;
 	text-align: center;
-	width: 90%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	color: var(--text-color);
+	word-break: break-word;
+	max-width: 100%;
 }
 
 .edit-button {
 	position: absolute;
-	top: $space-xs;
-	right: $space-xs;
+	top: 8px;
+	right: 8px;
 	width: 24px;
 	height: 24px;
-	border-radius: 50%;
-	background-color: rgba(0, 0, 0, 0.1);
+	background: none;
 	border: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
 	opacity: 0;
-	transition: $transition-fast;
-	
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.2);
-	}
+	transition: opacity 0.2s;
+	cursor: pointer;
+	padding: 0;
+	font-size: 18px;
+	color: var(--text-color);
 }
 
 .add-shortcut {
+	cursor: pointer;
+	border: 1px dashed var(--border-color);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	cursor: pointer;
-	border: 2px dashed var(--border-color);
-	background-color: transparent;
 	
 	&:hover {
-		border-color: var(--primary-color);
-		background-color: rgba(0, 0, 0, 0.02);
+		background-color: var(--hover-color);
 	}
-	
-	.add-icon {
-		font-size: 32px;
-		margin-bottom: $space-sm;
-	}
-	
-	.add-text {
-		font-size: $font-size-sm;
-		color: var(--text-color-secondary);
-	}
+}
+
+.add-icon {
+	font-size: 24px;
+	margin-bottom: 8px;
+	color: var(--text-color);
+}
+
+.add-text {
+	font-size: 14px;
+	color: var(--text-color);
 }
 
 /* 模态框样式 */
-.shortcut-modal,
-.confirm-modal {
+.shortcut-modal, .confirm-modal {
 	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 1000;
+	width: 100%;
+	height: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
+	z-index: 1000;
 }
 
 .modal-backdrop {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	background-color: var(--modal-backdrop);
 }
 
 .modal-content {
 	position: relative;
 	width: 90%;
-	max-width: 500px;
-	background-color: var(--card-bg);
-	border-radius: $border-radius-lg;
-	box-shadow: 0 4px 20px var(--shadow-color);
+	max-width: 400px;
+	background-color: var(--modal-bg);
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	z-index: 1001;
-	transform: translate(-50%, -50%);
-	position: fixed;
-	top: 50%;
-	left: 50%;
 }
 
 .modal-header {
-	padding: $space-md;
+	padding: 16px;
 	border-bottom: 1px solid var(--border-color);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	
-	h3 {
-		margin: 0;
-		font-size: $font-size-lg;
-	}
-	
-	.close-button {
-		background: transparent;
-		border: none;
-		font-size: 24px;
-		cursor: pointer;
-		color: var(--text-color-secondary);
-		
-		&:hover {
-			color: var(--text-color);
-		}
-	}
+}
+
+.modal-header h3 {
+	margin: 0;
+	color: var(--text-color);
+}
+
+.close-button {
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: var(--text-color);
 }
 
 .modal-body {
-	padding: $space-md;
+	padding: 16px;
 }
 
 .form-group {
-	margin-bottom: $space-md;
-	
-	label {
-		display: block;
-		margin-bottom: $space-xs;
-		font-weight: $font-weight-bold;
-	}
-	
-	input {
-		width: 100%;
-		padding: $space-sm;
-		border: 1px solid var(--border-color);
-		border-radius: $border-radius-sm;
-		
-		&:focus {
-			border-color: var(--primary-color);
-			outline: none;
-		}
-	}
+	margin-bottom: 16px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--text-color);
+}
+
+.form-group input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	background-color: var(--bg-color);
+	color: var(--text-color);
 }
 
 .modal-footer {
-	padding: $space-md;
+	padding: 16px;
 	border-top: 1px solid var(--border-color);
 	display: flex;
 	justify-content: space-between;
@@ -455,97 +434,54 @@ async function deleteShortcut() {
 
 .action-buttons {
 	display: flex;
-	gap: $space-sm;
+	gap: 8px;
 }
 
-.cancel-button,
-.save-button,
-.delete-button,
-.delete-confirm-button {
-	padding: $space-xs $space-md;
-	border-radius: $border-radius-sm;
+.cancel-button, .save-button, .delete-button, .delete-confirm-button {
+	padding: 8px 16px;
+	border-radius: 4px;
 	cursor: pointer;
-	font-size: $font-size-base;
 }
 
 .cancel-button {
 	background-color: transparent;
 	border: 1px solid var(--border-color);
 	color: var(--text-color);
-	
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.05);
-	}
 }
 
 .save-button {
 	background-color: var(--primary-color);
-	color: white;
 	border: none;
-	
-	&:hover {
-		background-color: var(--primary-color-dark);
-	}
+	color: white;
 }
 
 .delete-button {
 	background-color: transparent;
-	color: var(--danger-color);
-	border: 1px solid var(--danger-color);
-	
-	&:hover {
-		background-color: rgba(231, 76, 60, 0.1);
-	}
+	border: 1px solid #e74c3c;
+	color: #e74c3c;
 }
 
 .delete-confirm-button {
-	background-color: var(--danger-color);
-	color: white;
+	background-color: #e74c3c;
 	border: none;
-	
-	&:hover {
-		opacity: 0.8;
-	}
+	color: white;
 }
 
-/* 确认对话框样式 */
+/* 确认删除对话框 */
 .confirm-content {
-	max-width: 400px;
+	padding: 24px;
 	text-align: center;
 }
 
 .confirm-message {
-	padding: $space-xl $space-md;
-	font-size: $font-size-base;
-	font-weight: $font-weight-bold;
+	margin-bottom: 24px;
+	font-size: 16px;
+	color: var(--text-color);
 }
 
 .confirm-actions {
-	padding: $space-md;
-	border-top: 1px solid var(--border-color);
 	display: flex;
 	justify-content: center;
-	gap: $space-md;
-}
-
-/* 响应式样式 */
-@include responsive(sm) {
-	.shortcuts-container {
-		gap: $space-md;
-	}
-	
-	.shortcut-item {
-		width: 70px;
-		height: 70px;
-	}
-	
-	.shortcut-icon {
-		width: 32px;
-		height: 32px;
-	}
-	
-	.shortcut-name {
-		font-size: 12px;
-	}
+	gap: 16px;
 }
 </style> 

@@ -189,9 +189,10 @@ onUnmounted(() => {
 	.language-button {
 		font-weight: bold;
 		padding: 8px 12px;
-		border: 2px solid #3498db;
+		border: 2px solid var(--primary-color);
 		border-radius: 4px;
-		background-color: #f8f9fa;
+		background-color: var(--bg-color);
+		color: var(--text-color);
 		cursor: pointer;
 	}
 	
@@ -200,8 +201,8 @@ onUnmounted(() => {
 		top: 100%;
 		right: 0;
 		z-index: 99999;
-		background: white;
-		border: 1px solid #ddd;
+		background: var(--dropdown-bg);
+		border: 1px solid var(--border-color);
 		min-width: 150px;
 		padding: 8px;
 		border-radius: 4px;
@@ -219,22 +220,23 @@ onUnmounted(() => {
 		cursor: pointer;
 		border-radius: 4px;
 		background-color: transparent;
+		color: var(--text-color);
 		
 		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
+			background-color: var(--hover-color);
 		}
 		
 		&.active {
-			background-color: var(--primary-color, #007bff);
+			background-color: var(--primary-color);
 			color: white;
 		}
 	}
 	
 	.theme-button,
 	.settings-button {
-		background: transparent;
-		color: var(--text-color, #333333);
-		border: 1px solid var(--border-color, #e0e0e0);
+		background: var(--bg-color);
+		color: var(--text-color);
+		border: 1px solid var(--border-color);
 		border-radius: 4px;
 		padding: 6px 12px;
 		cursor: pointer;
@@ -242,14 +244,14 @@ onUnmounted(() => {
 		min-width: 40px;
 		
 		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
+			background-color: var(--hover-color);
 		}
 	}
 	
 	.settings-button {
 		display: flex;
 		align-items: center;
-		gap: 4px;
+		gap: 6px;
 	}
 }
 

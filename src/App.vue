@@ -11,89 +11,7 @@
 		</main>
 
 		<!-- 设置面板 -->
-		<div v-if="isSettingsOpen" class="settings-modal" style="display: flex;">
-			<div class="modal-backdrop" @click="closeSettings"></div>
-			<div class="settings-content">
-				<div class="settings-header">
-					<h2>{{ i18nStore.t('settings') }}</h2>
-					<button class="close-button" @click="closeSettings">&times;</button>
-				</div>
-				<div class="settings-body">
-					<div class="settings-sidebar">
-						<div 
-							class="sidebar-item" 
-							:class="{ active: currentSettingsTab === 'general' }"
-							@click="currentSettingsTab = 'general'"
-						>{{ i18nStore.t('general') }}</div>
-						<div 
-							class="sidebar-item" 
-							:class="{ active: currentSettingsTab === 'search' }"
-							@click="currentSettingsTab = 'search'"
-						>{{ i18nStore.t('search') }}</div>
-						<div 
-							class="sidebar-item" 
-							:class="{ active: currentSettingsTab === 'import' }"
-							@click="currentSettingsTab = 'import'"
-						>{{ i18nStore.t('import_export') }}</div>
-						<div 
-							class="sidebar-item" 
-							:class="{ active: currentSettingsTab === 'language' }"
-							@click="currentSettingsTab = 'language'"
-						>{{ i18nStore.t('language') }}</div>
-						<div 
-							class="sidebar-item" 
-							:class="{ active: currentSettingsTab === 'about' }"
-							@click="currentSettingsTab = 'about'"
-						>{{ i18nStore.t('about') }}</div>
-					</div>
-					<div class="settings-panel">
-						<!-- 不同设置页面的内容 -->
-						<div v-if="currentSettingsTab === 'general'" class="settings-tab-content">
-							<h3>{{ i18nStore.t('general_settings') }}</h3>
-							<div class="form-group">
-								<label>{{ i18nStore.t('theme') }}</label>
-								<div class="theme-options">
-									<button 
-										@click="settingsStore.setThemeMode('light')"
-										:class="{ active: settingsStore.themeMode === 'light' }"
-									>
-										{{ i18nStore.t('light') }}
-									</button>
-									<button 
-										@click="settingsStore.setThemeMode('dark')"
-										:class="{ active: settingsStore.themeMode === 'dark' }"
-									>
-										{{ i18nStore.t('dark') }}
-									</button>
-									<button 
-										@click="settingsStore.setThemeMode('auto')"
-										:class="{ active: settingsStore.themeMode === 'auto' }"
-									>
-										{{ i18nStore.t('auto') }}
-									</button>
-								</div>
-							</div>
-						</div>
-						<div v-if="currentSettingsTab === 'search'" class="settings-tab-content">
-							<h3>{{ i18nStore.t('search_settings') }}</h3>
-							<!-- 搜索引擎设置 -->
-						</div>
-						<div v-if="currentSettingsTab === 'import'" class="settings-tab-content">
-							<h3>{{ i18nStore.t('import_export') }}</h3>
-							<!-- 导入导出设置 -->
-						</div>
-						<div v-if="currentSettingsTab === 'language'" class="settings-tab-content">
-							<h3>{{ i18nStore.t('language_settings') }}</h3>
-							<!-- 语言设置 -->
-						</div>
-						<div v-if="currentSettingsTab === 'about'" class="settings-tab-content">
-							<h3>{{ i18nStore.t('about') }}</h3>
-							<p>pistaink.com - v1.0.0</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<SettingsPanel v-model="isSettingsOpen" />
 	</div>
 </template>
 
@@ -108,6 +26,7 @@ import Header from '@/components/layout/Header.vue'
 import SearchBox from '@/components/search/SearchBox.vue'
 import ShortcutGrid from '@/components/shortcuts/ShortcutGrid.vue'
 import PluginRegistry from '@/plugins/core/PluginRegistry.vue'
+import SettingsPanel from '@/components/settings/SettingsPanel.vue'
 
 // 导入插件
 import DrawingPlugin from '@/plugins/drawing'
@@ -123,16 +42,10 @@ const backgroundService = useBackgroundService()
 
 // 设置面板状态
 const isSettingsOpen = ref(false)
-const currentSettingsTab = ref('general')
 
 // 打开设置面板
 function openSettings() {
 	isSettingsOpen.value = true
-}
-
-// 关闭设置面板
-function closeSettings() {
-	isSettingsOpen.value = false
 }
 
 // 初始化数据和设置
@@ -255,7 +168,7 @@ function updateThemeBasedOnPreference(e: MediaQueryListEvent | MediaQueryList) {
 </script>
 
 <style>
-/* 1. 添加全局主题变量 */
+/* 1. 修改全局主题变量 */
 :root {
 	/* Light theme variables */
 	--bg-color: #ffffff;
@@ -264,134 +177,33 @@ function updateThemeBasedOnPreference(e: MediaQueryListEvent | MediaQueryList) {
 	--hover-color: #f5f5f5;
 	--primary-color: #4a90e2;
 	--modal-backdrop: rgba(0, 0, 0, 0.5);
+	--secondary-text-color: #666666; /* 添加次要文本颜色 */
+	--input-text-color: #333333;    /* 输入框文本颜色 */
+	--button-text-color: #333333;   /* 按钮文本颜色 */
+	--icon-color: #555555;          /* 图标颜色 */
+	--dropdown-bg: #ffffff;         /* 下拉菜单背景 */
+	--modal-bg: #ffffff;            /* 模态框背景 */
+	--card-bg: #ffffff;             /* 卡片背景 */
 }
 
 [data-theme="dark"] {
 	/* Dark theme variables */
 	--bg-color: #1a1a1a;
-	--text-color: #ffffff;
-	--border-color: #333333;
+	--text-color: #ffffff;        /* 修改为纯白色 */
+	--border-color: #444444;      /* 深色边框更明显 */
 	--hover-color: #2a2a2a;
 	--primary-color: #64b5f6;
 	--modal-backdrop: rgba(0, 0, 0, 0.7);
+	--secondary-text-color: #cccccc; /* 暗色模式下的次要文本颜色更亮 */
+	--input-text-color: #ffffff;    /* 输入框文本颜色 */
+	--button-text-color: #ffffff;   /* 按钮文本颜色 */
+	--icon-color: #bbbbbb;          /* 图标颜色 */
+	--dropdown-bg: #2c2c2c;         /* 下拉菜单背景 */
+	--modal-bg: #2c2c2c;            /* 模态框背景 */
+	--card-bg: #2c2c2c;             /* 卡片背景 */
 }
 
-/* 2. 添加设置面板样式 */
-.settings-modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 1000;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.modal-backdrop {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: var(--modal-backdrop);
-}
-
-.settings-content {
-	position: relative;
-	width: 80%;
-	max-width: 1000px;
-	height: 80vh;
-	background-color: var(--bg-color);
-	border-radius: 8px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-	z-index: 1001;
-}
-
-.settings-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 16px 24px;
-	border-bottom: 1px solid var(--border-color);
-}
-
-.settings-body {
-	display: flex;
-	height: calc(100% - 60px);
-}
-
-.settings-sidebar {
-	width: 200px;
-	padding: 16px;
-	border-right: 1px solid var(--border-color);
-}
-
-.sidebar-item {
-	padding: 12px 16px;
-	margin-bottom: 8px;
-	border-radius: 4px;
-	cursor: pointer;
-	color: var(--text-color);
-	transition: background-color 0.3s;
-}
-
-.sidebar-item:hover {
-	background-color: var(--hover-color);
-}
-
-.sidebar-item.active {
-	background-color: var(--primary-color);
-	color: white;
-}
-
-.settings-panel {
-	flex: 1;
-	padding: 24px;
-	overflow-y: auto;
-}
-
-.close-button {
-	background: none;
-	border: none;
-	font-size: 24px;
-	cursor: pointer;
-	padding: 4px 8px;
-	color: var(--text-color);
-}
-
-.settings-tab-content {
-	color: var(--text-color);
-}
-
-.theme-options {
-	display: flex;
-	gap: 8px;
-	margin-top: 8px;
-}
-
-.theme-options button {
-	padding: 8px 16px;
-	border: 1px solid var(--border-color);
-	border-radius: 4px;
-	background: var(--bg-color);
-	color: var(--text-color);
-	cursor: pointer;
-	transition: all 0.3s;
-}
-
-.theme-options button:hover {
-	background: var(--hover-color);
-}
-
-.theme-options button.active {
-	background: var(--primary-color);
-	color: white;
-	border-color: var(--primary-color);
-}
-
-/* 3. 添加全局样式 */
+/* 全局样式 */
 .app-container {
 	background-color: var(--bg-color);
 	color: var(--text-color);
@@ -405,6 +217,41 @@ function updateThemeBasedOnPreference(e: MediaQueryListEvent | MediaQueryList) {
 .form-group label {
 	display: block;
 	margin-bottom: 8px;
+	color: var(--text-color);
+}
+
+/* 输入框和按钮的样式覆盖 */
+input, textarea, select {
+	color: var(--input-text-color);
+	background-color: var(--bg-color);
+	border: 1px solid var(--border-color);
+}
+
+button {
+	color: var(--button-text-color);
+}
+
+/* 模态框和下拉菜单通用样式 */
+.modal-content {
+	background-color: var(--modal-bg);
+	color: var(--text-color);
+}
+
+.dropdown-menu {
+	background-color: var(--dropdown-bg);
+	color: var(--text-color);
+}
+
+.dropdown-item {
+	color: var(--text-color);
+}
+
+.dropdown-item:hover {
+	background-color: var(--hover-color);
+}
+
+/* 确保所有标题文本使用正确的颜色 */
+h1, h2, h3, h4, h5, h6 {
 	color: var(--text-color);
 }
 </style>
